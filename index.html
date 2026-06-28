@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>totonouné ｜ 耳ツボセラピー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#F7F2EA;
+    --bg2:#FBF8F2;
+    --card:#FFFFFF;
+    --ink:#3B352D;
+    --ink-soft:#6E665A;
+    --muted:#A79C8B;
+    --line:#E9E0D2;
+    --gold:#C2A268;
+    --gold-deep:#A9854B;
+    --gold-soft:#F3EAD8;
+    --rose:#C58E86;
+    --shadow:0 14px 40px -18px rgba(80,60,30,.32);
+    --shadow-sm:0 6px 18px -10px rgba(80,60,30,.30);
+    --radius:20px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #FFFDF8 0%, rgba(255,253,248,0) 60%),
+      linear-gradient(180deg,var(--bg2),var(--bg));
+    background-attachment:fixed;
+    min-height:100vh;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mincho{font-family:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",serif;}
+
+  .shell{max-width:560px;margin:0 auto;padding:0 18px;min-height:100vh;display:flex;flex-direction:column;}
+
+  /* Top bar */
+  .topbar{position:sticky;top:0;z-index:30;padding:14px 2px 12px;
+    background:linear-gradient(180deg, var(--bg2) 70%, rgba(251,248,242,0));}
+  .brandrow{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .brand{font-family:"Shippori Mincho B1",serif;letter-spacing:.14em;font-size:15px;color:var(--ink);display:flex;align-items:center;gap:9px}
+  .brand .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}
+  .brand small{letter-spacing:.06em;color:var(--muted);font-family:"Zen Kaku Gothic New",sans-serif;font-size:10.5px;font-weight:500}
+  .adjust{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--ink-soft);cursor:pointer;user-select:none;
+    border:1px solid var(--line);background:#fff;padding:6px 10px;border-radius:999px;transition:.25s}
+  .adjust:hover{border-color:var(--gold)}
+  .adjust .sw{width:30px;height:17px;border-radius:999px;background:#E4DBCB;position:relative;transition:.25s}
+  .adjust .sw::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.25s var(--ease)}
+  .adjust.on .sw{background:var(--gold)}
+  .adjust.on .sw::after{left:15px}
+  .swatch{width:13px;height:13px;border-radius:50%;background:var(--gold);box-shadow:inset 0 0 0 1.5px #fff,0 0 0 1px var(--line);transition:.3s}
+
+  /* repeat / my-chart */
+  .lastvisit{background:linear-gradient(180deg,#fff,var(--gold-soft));border:1px solid var(--line);border-radius:15px;
+    padding:13px 15px;margin-bottom:16px;display:flex;align-items:center;gap:12px;text-align:left;box-shadow:var(--shadow-sm)}
+  .lastvisit .lv-ic{flex:none;width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center;color:var(--gold-deep);font-size:18px}
+  .lastvisit .lv-t{flex:1;font-size:12.5px;color:var(--ink-soft);line-height:1.5}
+  .lastvisit .lv-t b{color:var(--ink);font-family:"Shippori Mincho B1",serif;font-weight:600}
+  .reminder{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#FBF7EF;border:1px solid var(--line);border-radius:13px;padding:12px 14px;margin-top:12px}
+  .reminder .rm-t{font-size:13px;color:var(--ink)}
+  .reminder .rm-t small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+  .save-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .save-btn{flex:1;min-width:140px;border:1.5px solid var(--gold);background:#fff;color:var(--gold-deep);border-radius:13px;padding:12px;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;transition:.2s}
+  .save-btn:hover{background:var(--gold-soft)}
+  .save-btn.done{background:var(--gold);color:#fff;border-color:var(--gold)}
+  .compare{margin-top:12px;font-size:12.5px;color:var(--ink-soft);background:#fff;border:1px dashed var(--gold);border-radius:12px;padding:11px 13px;line-height:1.6}
+  .compare b{color:var(--gold-deep)}
+
+  .progress-wrap{margin-top:11px;display:flex;align-items:center;gap:11px}
+  .progress{flex:1;height:5px;border-radius:99px;background:#EBE2D2;overflow:hidden}
+  .progress > i{display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,var(--gold),var(--gold-deep));transition:width .55s var(--ease)}
+  .stepno{font-size:11px;color:var(--muted);letter-spacing:.05em;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  /* Stage */
+  main{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:8px 0 130px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:26px 22px 24px;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5}
+
+  .kicker{font-size:11.5px;letter-spacing:.18em;color:var(--gold-deep);font-weight:700;text-transform:uppercase;margin-bottom:9px}
+  .q-title{font-family:"Shippori Mincho B1",serif;font-size:21px;line-height:1.55;font-weight:600;letter-spacing:.01em;margin:0 0 6px}
+  .q-note{font-size:12.5px;color:var(--ink-soft);background:var(--gold-soft);border-radius:12px;padding:10px 13px;margin:12px 0 4px;line-height:1.6}
+  .group-label{font-size:11px;letter-spacing:.14em;color:var(--muted);font-weight:700;margin:20px 0 9px;display:flex;align-items:center;gap:9px}
+  .group-label::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .opts{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+  .opts.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .opt{appearance:none;text-align:left;border:1.5px solid var(--line);background:#FFFEFB;border-radius:14px;
+    padding:13px 14px;cursor:pointer;transition:.2s var(--ease);display:flex;align-items:flex-start;gap:11px;
+    font-family:inherit;color:var(--ink);font-size:14.5px;line-height:1.45;width:100%}
+  .opt:hover{border-color:var(--gold);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+  .opt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .opt .mark{flex:none;width:21px;height:21px;border-radius:50%;border:1.5px solid var(--line);
+    display:grid;place-items:center;margin-top:1px;transition:.2s}
+  .opt.multi .mark{border-radius:7px}
+  .opt .mark svg{width:12px;height:12px;opacity:0;transform:scale(.4);transition:.2s var(--ease)}
+  .opt .body{display:flex;flex-direction:column}
+  .opt .sub{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+  .opt.sel{border-color:var(--gold);background:linear-gradient(180deg,#FFFDF6,var(--gold-soft));box-shadow:var(--shadow-sm)}
+  .opt.sel .mark{background:var(--gold);border-color:var(--gold)}
+  .opt.sel .mark svg{opacity:1;transform:scale(1);color:#fff}
+  .opt .rankbadge{flex:none;width:21px;height:21px;border-radius:50%;border:1.5px solid var(--line);
+    display:grid;place-items:center;margin-top:1px;font-size:12px;font-weight:700;color:var(--muted);transition:.2s}
+  .opt.sel .rankbadge{background:var(--gold);border-color:var(--gold);color:#fff}
+  .opt.disabled{opacity:.4;pointer-events:none}
+
+  .counter{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--gold-deep);
+    background:var(--gold-soft);border-radius:99px;padding:4px 11px;margin-top:14px;font-weight:700;font-variant-numeric:tabular-nums}
+
+  /* Bottom nav */
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:40;
+    background:linear-gradient(180deg,rgba(247,242,234,0),var(--bg) 38%);padding:16px 0 max(18px,env(safe-area-inset-bottom))}
+  .nav-inner{max-width:560px;margin:0 auto;padding:0 18px;display:flex;gap:12px}
+  .btn{flex:1;border:none;border-radius:15px;padding:15px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;
+    transition:.2s var(--ease);letter-spacing:.04em}
+  .btn-ghost{flex:0 0 116px;background:#fff;border:1.5px solid var(--line);color:var(--ink-soft)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--ink)}
+  .btn-primary{background:linear-gradient(180deg,#4A4339,#3B352D);color:#F6EFE1;box-shadow:0 10px 24px -12px rgba(59,53,45,.8)}
+  .btn-primary:hover{transform:translateY(-1px)}
+  .btn-primary:disabled{background:#E7DECF;color:#B7AC99;cursor:not-allowed;transform:none;box-shadow:none}
+
+  /* Hero */
+  .hero{text-align:center;padding:46px 22px 40px}
+  .hero .glyph{width:62px;height:62px;margin:0 auto 22px;display:grid;place-items:center;border-radius:50%;
+    background:linear-gradient(180deg,#fff,var(--gold-soft));border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+  .hero .glyph svg{width:34px;height:34px;color:var(--gold-deep)}
+  .hero h1{font-family:"Shippori Mincho B1",serif;font-weight:600;font-size:27px;line-height:1.6;margin:0 0 6px;letter-spacing:.02em}
+  .hero .cn{font-family:"Shippori Mincho B1",serif;color:var(--gold-deep);letter-spacing:.3em;font-size:13px;margin-bottom:20px}
+  .hero p{color:var(--ink-soft);font-size:14px;max-width:380px;margin:0 auto 8px}
+  .hero .steps-mini{display:flex;justify-content:center;gap:7px;margin:26px 0 6px;flex-wrap:wrap}
+  .hero .steps-mini span{font-size:11px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 12px}
+
+  /* transitions */
+  .enter{animation:enter .5s var(--ease) both}
+  @keyframes enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .reveal{opacity:0;transform:translateY(16px);animation:enter .6s var(--ease) forwards}
+
+  /* Result */
+  .res-head{text-align:center;padding:8px 6px 4px}
+  .res-head .kicker{margin-bottom:8px}
+  .res-head h2{font-family:"Shippori Mincho B1",serif;font-size:23px;font-weight:600;margin:0 0 6px;line-height:1.5}
+  .res-head p{color:var(--ink-soft);font-size:13px;margin:0}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:20px 18px;margin-top:16px}
+  .block h3{font-family:"Shippori Mincho B1",serif;font-size:16px;font-weight:600;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .block h3 .n{flex:none;width:24px;height:24px;border-radius:8px;background:var(--gold-soft);color:var(--gold-deep);display:grid;place-items:center;font-size:12px;font-weight:800;font-family:"Zen Kaku Gothic New",sans-serif}
+  .block .lead{font-size:12px;color:var(--muted);margin:0 0 12px}
+
+  .summary{display:grid;grid-template-columns:auto 1fr;gap:9px 14px;font-size:13.5px}
+  .summary dt{color:var(--muted);font-size:12px;white-space:nowrap}
+  .summary dd{margin:0;color:var(--ink)}
+
+  .emo-flow{display:flex;flex-direction:column;gap:8px}
+  .emo-row{display:flex;align-items:center;gap:10px;font-size:13.5px}
+  .emo-row .e{flex:1;color:var(--ink-soft)}
+  .emo-row .arr{color:var(--gold);font-size:12px}
+  .organ-chip{display:inline-grid;place-items:center;min-width:34px;height:34px;border-radius:10px;padding:0 9px;
+    font-family:"Shippori Mincho B1",serif;font-size:16px;font-weight:600;color:#fff;
+    background:linear-gradient(180deg,var(--gold),var(--gold-deep));box-shadow:var(--shadow-sm)}
+  .organ-summary{margin-top:14px;padding:13px 14px;border-radius:13px;background:var(--gold-soft);font-size:13.5px;line-height:1.7;color:var(--ink)}
+  .organ-summary b{color:var(--gold-deep)}
+
+  .ears{display:flex;gap:12px;margin-top:6px}
+  .ear-col{flex:1;text-align:center}
+  .ear-col .ear-name{font-family:"Shippori Mincho B1",serif;font-size:14px;margin-bottom:2px}
+  .ear-col .ear-sub{font-size:10.5px;color:var(--muted);margin-bottom:6px;min-height:14px}
+  .ear-svg{width:100%;height:auto;display:block}
+  .badge-pop{transform-origin:center;animation:pop .45s var(--ease) both}
+  @keyframes pop{0%{opacity:0;transform:scale(.2)}70%{transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+
+  .legend{margin-top:14px;display:flex;flex-direction:column;gap:7px}
+  .legend .li{display:flex;align-items:flex-start;gap:10px;font-size:12.5px;color:var(--ink-soft)}
+  .legend .li .b{flex:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(180deg,var(--gold),var(--gold-deep));
+    color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;margin-top:1px}
+  .legend .li b{color:var(--ink);font-weight:600}
+
+  .howto li{font-size:13px;color:var(--ink-soft);margin-bottom:9px;line-height:1.65}
+  .howto li b{color:var(--ink)}
+  .next-list{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+  .next-item{display:flex;align-items:center;gap:10px;font-size:13px;background:#FBF7EF;border:1px dashed var(--gold);border-radius:12px;padding:10px 13px}
+  .next-item .ic{color:var(--gold-deep);font-size:11px;font-weight:700;background:#fff;border-radius:99px;padding:3px 9px;border:1px solid var(--line)}
+  .closing{font-size:13.5px;color:var(--ink-soft);line-height:1.8;text-align:center;padding:6px 4px}
+  .disclaimer{font-size:11px;color:var(--muted);text-align:center;margin:22px 6px 0;line-height:1.7}
+  footer{padding:14px 0 40px;text-align:center}
+  .restart{background:none;border:1px solid var(--line);color:var(--ink-soft);border-radius:99px;padding:11px 22px;font-family:inherit;font-size:13px;cursor:pointer;transition:.2s}
+  .restart:hover{border-color:var(--gold);color:var(--ink)}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;transition-duration:.05ms !important}
+  }
+  @media (max-width:380px){ .opts.grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar" id="topbar">
+    <div class="brandrow">
+      <div class="brand"><span class="dot"></span><span id="brandName" class="mincho">totonoué</span>&nbsp;<small id="brandTag">耳ツボセラピー</small></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="adjust" id="brandSwitch" tabindex="0" title="ホワイトラベル：院ごとにブランドを差し替え（デモ）"><span class="swatch" id="swatch"></span>店舗</div>
+        <div class="adjust" id="adjust" role="switch" aria-checked="false" tabindex="0" title="結果の耳マップ上の位置を微調整するモード（デモ）">
+          <span class="sw"></span>位置調整
+        </div>
+      </div>
+    </div>
+    <div class="progress-wrap" id="progressWrap" style="display:none">
+      <div class="progress"><i id="bar"></i></div>
+      <div class="stepno" id="stepno">1 / 9</div>
+    </div>
+  </div>
+
+  <main id="stage"></main>
+</div>
+
+<div class="nav" id="nav" style="display:none">
+  <div class="nav-inner">
+    <button class="btn btn-ghost" id="back">もどる</button>
+    <button class="btn btn-primary" id="next">つぎへ</button>
+  </div>
+</div>
+
+<script>
+/* ---------- icons ---------- */
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg>';
+const EARGLYPH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 1 1 12 0c0 3-2.2 4-3.4 5.2C13.4 15.4 13 16.4 13 18a3 3 0 0 1-5.6 1.5"/><path d="M9.2 9.2a2.8 2.8 0 0 1 5.4 1c0 1.8-1.8 2.4-2.6 3.4"/></svg>';
+
+/* ---------- option pools ---------- */
+const BODY_PARTS = ["頭","首肩","腕","肘","手首","指の関節","背中","腰","股関節","お尻・骨盤まわり","太もも","ふくらはぎ","膝","足首","足底","足の指"];
+const TROUBLES  = ["むくみ","眼精疲労","だるさ・倦怠感","寝ても疲れがとれない","不安感","冷え","便秘","つい食べすぎてしまう","ホットフラッシュ","花粉症・アレルギー症状"];
+
+/* ---------- ear reflex points (normalized to a 0..200 x, 0..280 y RIGHT-ear viewBox) ---------- */
+const PT = {
+  "神門":[120,74],"内分泌":[96,196],"皮質下":[104,188],"交感":[140,150],
+  "腎":[120,112],"肝":[110,150],"脾":[92,164],"心":[103,150],"肺":[90,150],
+  "枕":[80,182],"腹水点":[100,170],"眼":[98,236],"胃":[97,142],"大腸":[84,138],"直腸":[76,150],
+  "頸肩":[132,170],"胸椎":[129,140],"腰椎":[126,120],"肩":[140,150],"肘":[148,122],
+  "腕指":[152,98],"膝":[136,104],"股関節":[130,114],"足首":[142,76],"足趾":[152,62],
+  "頭点":[106,246],"飢点":[78,164],"内鼻":[80,180],"風渓":[138,90],"骨盤":[114,90],"下顎":[114,214]
+};
+
+/* complaint -> ordered reflex set */
+const COMPLAINT_PT = {
+  "むくみ":["腎","脾","内分泌"],
+  "眼精疲労":["眼","肝","枕"],
+  "だるさ・倦怠感":["脾","枕","腹水点"],
+  "寝ても疲れがとれない":["神門","心","腎"],
+  "不安感":["神門","心","皮質下"],
+  "冷え":["腎","内分泌","交感"],
+  "便秘":["大腸","直腸","脾"],
+  "つい食べすぎてしまう":["飢点","胃","脾"],
+  "ホットフラッシュ":["内分泌","腎","神門"],
+  "花粉症・アレルギー症状":["内鼻","肺","風渓"],
+  "頭":["頭点","枕","神門"],"首肩":["頸肩","肩","神門"],"腕":["腕指","肩","神門"],
+  "肘":["肘","腕指","神門"],"手首":["腕指","肘","神門"],"指の関節":["腕指","肝","神門"],
+  "背中":["胸椎","腎","神門"],"腰":["腰椎","腎","神門"],"股関節":["股関節","骨盤","神門"],
+  "お尻・骨盤まわり":["骨盤","腰椎","神門"],"太もも":["股関節","膝","神門"],
+  "ふくらはぎ":["膝","足首","神門"],"膝":["膝","腎","神門"],"足首":["足首","膝","神門"],
+  "足底":["足趾","腎","神門"],"足の指":["足趾","足首","神門"]
+};
+const BALANCE_SET = ["神門","内分泌","皮質下"];
+
+/* emotion -> organ */
+const EMO_ORGAN = {
+  "最近イライラしやすいと感じる":"肝","しばらくストレス発散ができていない":"肝",
+  "自分の感情に蓋をしている感じがする":"肺","リラックスするのが苦手":"心",
+  "集中力が続かない":"脾","眠りが浅い":"心","あれこれ考えすぎてしまう":"脾",
+  "心配事が頭から離れない":"脾","悲しい":"肺","憂鬱な気分が続いている":"肺",
+  "落ち込む出来事があった":"肺","焦りやすい":"腎","怖さを感じる":"腎","記憶力が落ちたと感じる":"腎"
+};
+const ORGAN_PT = {"肺":"肺","腎":"腎","肝":"肝","心":"心","脾":"脾"};
+
+/* Q8 -> extra reflex */
+const BODYSTATE_PT = {
+  "食いしばり・歯ぎしりがある／マウスピースをしている":"下顎",
+  "首を動かすと痛む／ストレートネックと言われた":"頸肩",
+  "月経周期が乱れがち／更年期症状を感じる":"内分泌",
+  "四十肩・五十肩がある／座り仕事が多い／股関節が硬い":"骨盤"
+};
+
+/* ---------- questions ---------- */
+const Q = [
+  { id:"particles", type:"single", kicker:"Step 0",
+    title:"耳ツボシールは、何粒くらいから始めたいですか？",
+    note:"貼る数で、ご提案の細かさが変わります。迷ったら「しっかり」でOK。毎回変更できます。",
+    options:[
+      {value:"3", label:"まずは試す（片耳3粒）", sub:"初めての方・刺激に敏感な方に"},
+      {value:"6", label:"しっかり（片耳6粒）", sub:"standard｜バランスよく整えたい方に"},
+      {value:"10",label:"全身しっかり（片耳10粒）", sub:"耳ツボの体感をしっかり得たい方に"},
+    ]},
+  { id:"main", type:"single-grouped", kicker:"Step 1",
+    title:"今、いちばん整えたい不調を1つ選んでください",
+    note:"1つに絞ることで、効いているかどうかがご自身でも分かりやすくなります。",
+    groups:[
+      {name:"コリ・痛み系（部位）", values:BODY_PARTS},
+      {name:"不調・お悩み系", values:TROUBLES},
+    ]},
+  { id:"side", type:"single", kicker:"Step 1.5", conditional:true,
+    title:"その辛さは、左右どちらが強いですか？",
+    note:"辛い側の耳には、その不調を解消するご提案を。反対の耳には、体全体のバランスを整えるご提案をします。",
+    options:[{value:"right",label:"右が強い"},{value:"left",label:"左が強い"},{value:"both",label:"真ん中・両方同じくらい"}]},
+  { id:"sub", type:"multi", kicker:"Step 2", optional:true, dynamic:"subOptions",
+    title:"他に気になっている不調があれば教えてください",
+    note:"いちばんではないけれど、気になっていること。見立ての大事な手がかりになります。",
+    exclusive:["特になし"]},
+  { id:"period", type:"single", kicker:"Step 3",
+    title:"その不調は、どれくらいの期間続いていますか？",
+    options:["1ヶ月未満","1〜3ヶ月","3〜6ヶ月","6ヶ月〜1年","1年以上","若い頃からずっと"].map(v=>({value:v,label:v}))},
+  { id:"trigger", type:"multi", kicker:"Step 4", optional:true,
+    title:"その不調に、何かきっかけがあったと感じますか？",
+    exclusive:["特に思い当たらない"],
+    options:["特に思い当たらない","転倒・ぶつけた・捻挫などのケガ","引っ越しや仕事などの環境の変化","運動を急に始めた・またはやめた","同じ姿勢での長時間作業","ご家族の介護","精神的ストレスが増えた","体重の変化","お酒の量が増えた","食生活の乱れ","運動不足"].map(v=>({value:v,label:v}))},
+  { id:"emotion", type:"rank", max:3, kicker:"Step 5",
+    title:"今の心の状態に近いものを、当てはまる順に3つまで",
+    note:"このあと耳の反射区を刺激し比べて、今のあなたに一番おすすめな反射区を見つけます。",
+    options:Object.keys(EMO_ORGAN).map(v=>({value:v,label:v}))},
+  { id:"scar", type:"multi", kicker:"Step 6", optional:true, exclusive:["古傷はない"],
+    title:"過去の大きめのお怪我や手術痕（古傷）はありますか？",
+    note:"赤ちゃんの頃までさかのぼって。「こんな昔のこと？」という内容ほど、実は手がかりに。",
+    options:["ねん挫","火傷","骨折","骨にひびが入った","突き指","腹腔鏡手術","開腹手術","切り傷","ムチウチ","広範囲の打撲","頭または顔面の強打","古傷はない"].map(v=>({value:v,label:v}))},
+  { id:"bodystate", type:"multi", kicker:"Step 7", optional:true, exclusive:["どれにも該当しない"],
+    title:"ご自身の体の状態について教えてください",
+    options:[
+      "食いしばり・歯ぎしりがある／マウスピースをしている",
+      "首を動かすと痛む／ストレートネックと言われた",
+      "月経周期が乱れがち／更年期症状を感じる",
+      "四十肩・五十肩がある／座り仕事が多い／股関節が硬い",
+      "どれにも該当しない"
+    ].map(v=>({value:v,label:v}))},
+];
+
+/* ---------- white-label brand presets ---------- */
+const BRAND_PRESETS = [
+  {key:"totonoune", name:"totonoué", tag:"耳ツボセラピー", cn:"調 律",
+   catch:"今のあなたの体に聞く、<br/>オーダーメイドの貼り方", gold:"#C2A268", deep:"#A9854B", soft:"#F3EAD8"},
+  {key:"seishindo", name:"整心堂", tag:"耳つぼ整体", cn:"聴 体",
+   catch:"体の声を、耳でととのえる。", gold:"#6E9C8E", deep:"#4F7A6D", soft:"#E2EFEA"},
+  {key:"lien", name:"Lien", tag:"ear acu salon", cn:"結 ─ Lien",
+   catch:"今日のわたしに、<br/>効く一粒を。", gold:"#B98AA8", deep:"#8E5E7E", soft:"#F2E6EE"},
+];
+let brandIdx = 0;
+function brand(){ return BRAND_PRESETS[brandIdx]; }
+function applyBrand(){
+  const b=brand(), rs=document.documentElement.style;
+  rs.setProperty('--gold',b.gold); rs.setProperty('--gold-deep',b.deep); rs.setProperty('--gold-soft',b.soft);
+  const bn=document.getElementById('brandName'); if(bn) bn.innerHTML=b.name;
+  const bt=document.getElementById('brandTag'); if(bt) bt.textContent=b.tag;
+  const sw=document.getElementById('swatch'); if(sw) sw.style.background=b.gold;
+  if(view!=="q") render();
+}
+
+/* ---------- repeat engine (localStorage カルテ) ---------- */
+function histKey(){ return "totonoune_hist_"+brand().key; }
+function loadHistory(){ try{ return JSON.parse(localStorage.getItem(histKey())||"[]"); }catch(e){ return []; } }
+function saveRecord(rec){ const h=loadHistory(); h.push(rec); try{ localStorage.setItem(histKey(),JSON.stringify(h.slice(-12))); }catch(e){} }
+function lastRecord(){ const h=loadHistory(); return h.length? h[h.length-1] : null; }
+function fmtDate(ts){ const d=new Date(ts); return (d.getMonth()+1)+"月"+d.getDate()+"日"; }
+
+/* ---------- state ---------- */
+let view = "hero";   // hero | q | result
+let qIndex = 0;
+const state = {};    // answers keyed by question id
+let adjustMode = false;
+
+const stage = document.getElementById('stage');
+const nav = document.getElementById('nav');
+const backBtn = document.getElementById('back');
+const nextBtn = document.getElementById('next');
+const progressWrap = document.getElementById('progressWrap');
+const bar = document.getElementById('bar');
+const stepno = document.getElementById('stepno');
+
+/* which questions are active (handles conditional Q2) */
+function activeQuestions(){
+  return Q.filter(q=>{
+    if(q.id==="side") return BODY_PARTS.includes(state.main);
+    return true;
+  });
+}
+function isBodyMain(){ return BODY_PARTS.includes(state.main); }
+
+/* dynamic options for "他に気になる不調" (exclude already chosen main) */
+function subOptions(){
+  const all=[...BODY_PARTS,...TROUBLES].filter(v=>v!==state.main);
+  return [{value:"特になし",label:"特になし"},...all.map(v=>({value:v,label:v}))];
+}
+
+/* ---------- render ---------- */
+function render(){
+  if(view==="hero") return renderHero();
+  if(view==="result") return renderResult();
+  renderQuestion();
+}
+
+function renderHero(){
+  progressWrap.style.display="none";
+  nav.style.display="none";
+  const b=brand();
+  const last=lastRecord();
+  const lastCard = last ? `
+    <div class="lastvisit">
+      <div class="lv-ic">🗂️</div>
+      <div class="lv-t">前回のカルテ：<b>${fmtDate(last.ts)}</b>／主訴「${last.main}」（片耳${last.cap}粒）。<br/>今月も体の変化に合わせて、見直しましょう。</div>
+    </div>` : "";
+  stage.innerHTML = `
+    <div class="card hero enter">
+      ${lastCard}
+      <div class="glyph">${EARGLYPH}</div>
+      <div class="cn mincho">${b.cn}</div>
+      <h1 class="mincho">${b.catch}</h1>
+      <p>東洋医学の考えをもとに、いくつかの質問から「耳のどこに耳ツボシールを貼るか」をあなただけに合わせてご提案します。</p>
+      <div class="steps-mini">
+        <span>所要 約2分</span><span>全8問</span><span>毎月見直し</span>
+      </div>
+      <button class="btn btn-primary" id="startBtn" style="margin-top:22px;width:100%">${last?"今月の見直しをはじめる":"はじめる"}</button>
+      <p class="disclaimer" style="margin-top:18px">※本アプリはセルフケアの提案ツールであり、医療行為ではありません。効果・安全性は未検証のデモです。</p>
+    </div>`;
+  document.getElementById('startBtn').onclick=()=>{ view="q"; qIndex=0; render(); };
+}
+
+function renderQuestion(){
+  const list = activeQuestions();
+  if(qIndex>=list.length){ view="result"; return render(); }
+  const q = list[qIndex];
+  progressWrap.style.display="flex";
+  nav.style.display="block";
+  // progress
+  const pct = Math.round((qIndex)/(list.length)*100);
+  bar.style.width = Math.max(6,pct)+"%";
+  stepno.textContent = `${qIndex+1} / ${list.length}`;
+
+  let body = "";
+  if(q.type==="single"){
+    body = `<div class="opts">`+ q.options.map(o=>optHtml(o, state[q.id]===o.value, "single")).join("") +`</div>`;
+  }
+  else if(q.type==="single-grouped"){
+    body = q.groups.map(g=>`
+      <div class="group-label">${g.name}</div>
+      <div class="opts grid">${g.values.map(v=>optHtml({value:v,label:v}, state[q.id]===v,"single")).join("")}</div>
+    `).join("");
+  }
+  else if(q.type==="multi"){
+    const opts = q.dynamic ? subOptions() : q.options;
+    const sel = state[q.id]||[];
+    body = `<div class="opts">`+ opts.map(o=>optHtml(o, sel.includes(o.value), "multi")).join("") +`</div>`;
+  }
+  else if(q.type==="rank"){
+    const sel = state[q.id]||[];
+    body = `<div class="opts">`+ q.options.map(o=>{
+      const rank = sel.indexOf(o.value);
+      return optHtml(o, rank>=0, "rank", rank>=0?rank+1:null, sel.length>=q.max && rank<0);
+    }).join("") +`</div>
+    <div class="counter">選択 ${sel.length}/${q.max}</div>`;
+  }
+
+  stage.innerHTML = `
+    <div class="card enter" key="${q.id}">
+      <div class="kicker">${q.kicker||""}</div>
+      <h2 class="q-title mincho">${q.title}</h2>
+      ${q.note?`<div class="q-note">${q.note}</div>`:""}
+      ${body}
+    </div>`;
+
+  // wire option clicks
+  stage.querySelectorAll('.opt').forEach(el=>{
+    el.addEventListener('click',()=>onSelect(q, el.dataset.value));
+  });
+
+  // nav state
+  backBtn.style.visibility = (qIndex===0) ? "hidden":"visible";
+  nextBtn.textContent = (qIndex===list.length-1) ? "結果をみる" : "つぎへ";
+  nextBtn.disabled = !isAnswered(q);
+}
+
+function optHtml(o, selected, kind, rankNum, disabled){
+  const cls = ["opt", kind, selected?"sel":"", disabled?"disabled":""].join(" ");
+  let marker;
+  if(kind==="rank") marker = `<span class="rankbadge">${rankNum||""}</span>`;
+  else marker = `<span class="mark">${CHECK}</span>`;
+  return `<button class="${cls}" data-value="${escAttr(o.value)}" ${selected?'aria-pressed="true"':''}>
+      ${marker}
+      <span class="body"><span>${o.label}</span>${o.sub?`<span class="sub">${o.sub}</span>`:""}</span>
+    </button>`;
+}
+function escAttr(s){return String(s).replace(/"/g,'&quot;');}
+
+function onSelect(q, value){
+  if(q.type==="single"||q.type==="single-grouped"){
+    state[q.id]=value;
+    if(q.id==="main"){ /* changing main resets dependent answers */ delete state.side; delete state.sub; }
+  }
+  else if(q.type==="multi"){
+    const arr = new Set(state[q.id]||[]);
+    const excl = (q.exclusive||[]);
+    if(excl.includes(value)){
+      // exclusive toggles alone
+      if(arr.has(value)){ arr.delete(value); } else { arr.clear(); arr.add(value); }
+    } else {
+      excl.forEach(e=>arr.delete(e)); // picking a normal option clears any exclusive choice
+      arr.has(value)?arr.delete(value):arr.add(value);
+    }
+    state[q.id]=[...arr];
+  }
+  else if(q.type==="rank"){
+    const arr = [...(state[q.id]||[])];
+    const i = arr.indexOf(value);
+    if(i>=0) arr.splice(i,1);
+    else if(arr.length<q.max) arr.push(value);
+    state[q.id]=arr;
+  }
+  renderQuestion();
+}
+
+function isAnswered(q){
+  const v = state[q.id];
+  if(q.optional) return true;
+  if(q.type==="multi") return Array.isArray(v)&&v.length>0;
+  if(q.type==="rank")  return Array.isArray(v)&&v.length>0;
+  return !!v;
+}
+
+/* ---------- nav handlers ---------- */
+nextBtn.onclick=()=>{
+  const list=activeQuestions();
+  const q=list[qIndex];
+  if(!isAnswered(q)) return;
+  if(qIndex>=list.length-1){ view="result"; window.scrollTo(0,0); return render(); }
+  qIndex++; window.scrollTo(0,0); render();
+};
+backBtn.onclick=()=>{
+  if(view==="result"){ view="q"; qIndex=activeQuestions().length-1; window.scrollTo(0,0); return render(); }
+  if(qIndex>0){ qIndex--; window.scrollTo(0,0); render(); }
+};
+
+/* adjust toggle (demo) */
+const adjustEl=document.getElementById('adjust');
+function toggleAdjust(){ adjustMode=!adjustMode; adjustEl.classList.toggle('on',adjustMode); adjustEl.setAttribute('aria-checked',adjustMode); if(view==="result") render(); }
+adjustEl.onclick=toggleAdjust;
+adjustEl.onkeydown=(e)=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleAdjust();} };
+
+/* brand switch (white-label demo) */
+const brandSwitchEl=document.getElementById('brandSwitch');
+function cycleBrand(){ brandIdx=(brandIdx+1)%BRAND_PRESETS.length; if(view==="result"){ /* keep result */ } applyBrand(); }
+brandSwitchEl.onclick=cycleBrand;
+brandSwitchEl.onkeydown=(e)=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();cycleBrand();} };
+
+/* ---------- result computation ---------- */
+function computeResult(){
+  const cap = parseInt(state.particles||"3",10);
+  const main = state.main;
+  const primary = (COMPLAINT_PT[main]||["神門","内分泌","皮質下"]).slice();
+
+  // emotions -> organ tally (weighted by rank: 1st=3,2nd=2,3rd=1)
+  const emo = state.emotion||[];
+  const organScore={};
+  emo.forEach((e,i)=>{ const o=EMO_ORGAN[e]; if(o){ organScore[o]=(organScore[o]||0)+(3-i); } });
+  const topOrgans = Object.keys(organScore).sort((a,b)=>organScore[b]-organScore[a]).slice(0,2);
+  const emoPoints = topOrgans.map(o=>ORGAN_PT[o]).filter(Boolean);
+
+  // body-state extras
+  const bodyExtras = (state.bodystate||[]).map(v=>BODYSTATE_PT[v]).filter(Boolean);
+
+  // build per-ear candidate lists
+  const isBody = isBodyMain();
+  const side = state.side;
+  function buildEar(which){ // which: 'right'|'left'
+    let list=[];
+    if(isBody && side && side!=="both"){
+      const affected = side; // 'right' or 'left'
+      if(which===affected){ list=primary.slice(); }
+      else { list=BALANCE_SET.slice(); }
+    } else {
+      list=primary.slice();
+    }
+    // append emotion reflex, then body extras (dedupe)
+    [...emoPoints,...bodyExtras].forEach(p=>{ if(!list.includes(p)) list.push(p); });
+    return list;
+  }
+  function splitCap(list){ return { placed:list.slice(0,cap), next:list.slice(cap) }; }
+
+  const right = splitCap(buildEar('right'));
+  const left  = splitCap(buildEar('left'));
+
+  return {cap,main,primary,topOrgans,organScore,emoPoints,right,left,isBody,side};
+}
+
+/* ---------- ear SVG ---------- */
+function earSVG(side, placed){
+  // mirror for left ear: render outline group mirrored, badges with mirrored x but upright text
+  const mirror = (side==="left");
+  function X(x){ return mirror ? 200-x : x; }
+  const outline = `
+    <g ${mirror?'transform="translate(200,0) scale(-1,1)"':''}>
+      <path d="M150 60 C166 82 165 122 156 160 C150 196 134 226 110 246 C95 258 77 256 71 240 C65 224 70 205 70 196 C57 191 51 175 55 150 C59 119 71 95 96 76 C113 63 135 50 150 60 Z"
+        fill="#FBF3E6" stroke="#E4D3B4" stroke-width="2"/>
+      <path d="M138 74 C128 100 130 134 122 176" fill="none" stroke="#E9D9BC" stroke-width="7" stroke-linecap="round" opacity=".75"/>
+      <path d="M138 74 C146 86 150 96 150 104" fill="none" stroke="#E9D9BC" stroke-width="7" stroke-linecap="round" opacity=".75"/>
+      <ellipse cx="100" cy="150" rx="26" ry="33" fill="#F2E2C7" opacity=".7"/>
+      <ellipse cx="100" cy="150" rx="13" ry="17" fill="#EAD6B2" opacity=".7"/>
+      <path d="M70 150 C62 156 60 172 70 186" fill="#F4E6CC" stroke="#E4D3B4" stroke-width="1.5"/>
+    </g>`;
+  const badges = placed.map((name,i)=>{
+    const c = PT[name]||[100,150];
+    const bx=X(c[0]), by=c[1];
+    return `<g class="badge-pop" style="animation-delay:${i*90}ms">
+        <line x1="${bx}" y1="${by}" x2="${bx}" y2="${by}" stroke="#C2A268" stroke-width="0"/>
+        <circle cx="${bx}" cy="${by}" r="13" fill="url(#g${side})" stroke="#fff" stroke-width="2"/>
+        <text x="${bx}" y="${by+4.5}" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="Zen Kaku Gothic New,sans-serif">${i+1}</text>
+      </g>`;
+  }).join("");
+  return `<svg class="ear-svg" viewBox="0 0 200 280" role="img" aria-label="${side==='right'?'右':'左'}耳の反射区マップ">
+      <defs><linearGradient id="g${side}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#CBAC73"/><stop offset="1" stop-color="#A9854B"/></linearGradient></defs>
+      ${outline}${badges}
+    </svg>`;
+}
+
+/* ---------- render result ---------- */
+function renderResult(){
+  progressWrap.style.display="flex";
+  bar.style.width="100%"; stepno.textContent="完了";
+  nav.style.display="block";
+  backBtn.style.visibility="visible";
+  nextBtn.style.display="none";
+  backBtn.style.flex="1";
+
+  const r=computeResult();
+  const sideLabel = {right:"右",left:"左",both:"両方"}[r.side]||"";
+
+  // previous record comparison (repeat engine)
+  const prev=lastRecord();
+  let prevCompare="";
+  if(prev){
+    const sameMain = prev.main===state.main;
+    prevCompare = `<div class="compare">前回（<b>${fmtDate(prev.ts)}</b>）の主訴は「${prev.main}」。`
+      + (sameMain
+          ? `今回も同じ「${state.main}」のお悩みですね。継続して反射区を整えていきましょう。`
+          : `今回は「${state.main}」に変化。体の状態に合わせてご提案を組み替えました。`)
+      + `</div>`;
+  }
+
+  // summary values
+  const sum = [
+    ["シールの粒数", `片耳 ${r.cap}粒`],
+    ["いちばん整えたい不調", state.main||"—"],
+    ["続いている期間", state.period||"—"],
+    ["きっかけ", (state.trigger&&state.trigger.length)?state.trigger.join("、"):"—"],
+    ["他に気になる不調", (state.sub&&state.sub.length)?state.sub.join("、"):"—"],
+    ["今の心の状態", (state.emotion&&state.emotion.length)?state.emotion.join(" / "):"—"],
+    ["古傷", (state.scar&&state.scar.length)?state.scar.join("、"):"—"],
+    ["体の状態", (state.bodystate&&state.bodystate.length)?state.bodystate.join("、"):"—"],
+  ];
+
+  // emotion -> organ rows
+  const emoRows = (state.emotion||[]).map(e=>{
+    const o=EMO_ORGAN[e];
+    return `<div class="emo-row"><span class="e">「${e}」</span><span class="arr">▶</span><span class="organ-chip mincho">${o||"？"}</span></div>`;
+  }).join("");
+  const organText = r.topOrgans.length
+    ? `今のあなたの心は、<b>${r.topOrgans.join("・")}</b> に負担がかかりやすい状態です。おすすめの反射区は <b>${r.topOrgans.join("・")}</b> の${r.topOrgans.length}つ。指先でつまんで押し比べ、いちばん刺激を強く感じるところが、体がいちばん労わってほしいところです。`
+    : `心の状態の入力から、特定の偏りは強く出ませんでした。全体のバランスを整えるご提案を中心にしています。`;
+
+  // legend for right ear
+  function legendFor(placed){
+    return placed.map((name,i)=>`<div class="li"><span class="b">${i+1}</span><span><b>${name}</b> の反射区</span></div>`).join("");
+  }
+
+  // ear sub captions
+  let rSub="", lSub="";
+  if(r.isBody && r.side && r.side!=="both"){
+    rSub = (r.side==="right") ? "辛い側｜不調を解消" : "反対側｜全体バランス";
+    lSub = (r.side==="left")  ? "辛い側｜不調を解消" : "反対側｜全体バランス";
+  } else {
+    rSub = lSub = "両耳に共通の貼り方";
+  }
+
+  // next month
+  const nextItems=[];
+  r.right.next.forEach(n=>nextItems.push(["右耳",n]));
+  r.left.next.forEach(n=>nextItems.push(["左耳",n]));
+
+  stage.innerHTML = `
+    <div class="res-head reveal" style="animation-delay:.02s">
+      <div class="kicker">Your Prescription</div>
+      <h2 class="mincho">あなたへのご提案ができました</h2>
+      <p>今日の体と心に合わせた、片耳${r.cap}粒の貼り方です。</p>
+    </div>
+
+    <div class="block reveal" style="animation-delay:.08s">
+      <h3><span class="n">A</span>あなたのご回答</h3>
+      <dl class="summary">${sum.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
+    </div>
+
+    <div class="block reveal" style="animation-delay:.14s">
+      <h3><span class="n">B</span>今の心の状態の見える化</h3>
+      <p class="lead">選んでいただいた感情を、東洋医学の五臓につなげています。</p>
+      <div class="emo-flow">${emoRows||'<div class="emo-row"><span class="e">（心の状態の入力なし）</span></div>'}</div>
+      <div class="organ-summary">${organText}</div>
+    </div>
+
+    <div class="block reveal" style="animation-delay:.2s">
+      <h3><span class="n">C</span>耳の反射区マップ</h3>
+      <p class="lead">${adjustMode? "位置調整モード：制作・サロン側でテンプレ位置を微調整できます（デモ表示）。":"おすすめの貼付ポイントを番号で示しています。"}</p>
+      <div class="ears">
+        <div class="ear-col">
+          <div class="ear-name">右耳</div><div class="ear-sub">${rSub}</div>
+          ${earSVG("right", r.right.placed)}
+        </div>
+        <div class="ear-col">
+          <div class="ear-name">左耳</div><div class="ear-sub">${lSub}</div>
+          ${earSVG("left", r.left.placed)}
+        </div>
+      </div>
+      <div class="legend">
+        <div style="font-size:11px;color:var(--muted);letter-spacing:.1em;margin-bottom:2px">右耳のポイント</div>
+        ${legendFor(r.right.placed)}
+      </div>
+    </div>
+
+    <div class="block reveal" style="animation-delay:.26s">
+      <h3><span class="n">D</span>貼り方のご案内</h3>
+      <ul class="howto" style="margin:6px 0 0;padding-left:18px">
+        <li>写真・図の位置は<b>あくまで目安</b>です。マーク付近を指先でつまんで潰すように強く押し、<b>いちばん痛み・響きを感じるところ</b>に貼ってください。</li>
+        <li>図とズレても問題ありません。<b>むしろそこが、本当に貼るべき場所</b>です。</li>
+        <li>点線で示した候補は「押し比べ」用。押し比べて、いちばん響いたところに<b>1粒だけ</b>。左右で違う場所になっても大丈夫です。</li>
+      </ul>
+    </div>
+
+    ${nextItems.length?`
+    <div class="block reveal" style="animation-delay:.32s">
+      <h3><span class="n">E</span>来月のご提案</h3>
+      <p class="lead">今回の${r.cap}粒に入りきらなかった候補です。来月、組み直してご提案します。</p>
+      <div class="next-list">
+        ${nextItems.map(([ear,n])=>`<div class="next-item"><span class="ic">${ear}</span>${n} の反射区</div>`).join("")}
+      </div>
+    </div>`:""}
+
+    <div class="block reveal" style="animation-delay:.38s">
+      <h3><span class="n">F</span>マイカルテ・来月の見直し</h3>
+      <p class="lead">このご提案を記録すると、来月「前回からの変化」を見ながら組み直せます。</p>
+      ${prevCompare}
+      <div class="reminder">
+        <div class="rm-t">来月の見直しリマインド<small>1ヶ月後にLINE／メールでお知らせ（デモ）</small></div>
+        <div class="adjust" id="remToggle" role="switch" aria-checked="false" tabindex="0"><span class="sw"></span>受け取る</div>
+      </div>
+      <div class="save-row">
+        <button class="save-btn" id="saveChart">このカルテを保存する</button>
+      </div>
+    </div>
+
+    <div class="block reveal" style="animation-delay:.44s">
+      <h3><span class="n">G</span>さいごに</h3>
+      <p class="closing">今回の貼り方で体がどう変わったか、来月のカウンセリングで聞かせてください。<br/>その手応えが、次のご提案をもっとあなたに合うものにします。</p>
+    </div>
+
+    <p class="disclaimer">※本アプリはセルフケアの提案ツールであり、医療行為ではありません。効果・安全性は未検証のデモです。耳の図と反射区の位置はイメージで、実際は「押し比べ」で決めてください。</p>
+
+    <footer>
+      <button class="restart" id="restartBtn">はじめからやり直す</button>
+    </footer>`;
+
+  backBtn.textContent="設問にもどる";
+
+  // reminder toggle (demo)
+  const remBtn=document.getElementById('remToggle');
+  if(remBtn){
+    const tog=()=>{ const on=remBtn.classList.toggle('on'); remBtn.setAttribute('aria-checked',on); };
+    remBtn.onclick=tog;
+    remBtn.onkeydown=(e)=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();tog();} };
+  }
+  // save my-chart (repeat engine)
+  const saveBtn=document.getElementById('saveChart');
+  if(saveBtn){
+    saveBtn.onclick=()=>{
+      saveRecord({ ts:Date.now(), main:state.main, cap:r.cap, organs:r.topOrgans });
+      saveBtn.textContent="✓ カルテを保存しました";
+      saveBtn.classList.add('done');
+      saveBtn.disabled=true;
+    };
+  }
+
+  document.getElementById('restartBtn').onclick=()=>{
+    for(const k in state) delete state[k];
+    view="hero"; qIndex=0;
+    nextBtn.style.display=""; backBtn.style.flex="0 0 116px"; backBtn.textContent="もどる";
+    window.scrollTo(0,0); render();
+  };
+}
+
+/* ---------- keyboard: Enter to advance ---------- */
+document.addEventListener('keydown',(e)=>{
+  if(e.key==="Enter" && view==="q" && !nextBtn.disabled){ nextBtn.click(); }
+});
+
+applyBrand();
+render();
+</script>
+</body>
+</html>
