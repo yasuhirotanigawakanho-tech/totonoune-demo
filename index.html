@@ -9,48 +9,33 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --bg:#F7F2EA;
-    --bg2:#FBF8F2;
-    --card:#FFFFFF;
-    --ink:#3B352D;
-    --ink-soft:#6E665A;
-    --muted:#A79C8B;
-    --line:#E9E0D2;
-    --gold:#C2A268;
-    --gold-deep:#A9854B;
-    --gold-soft:#F3EAD8;
-    --rose:#C58E86;
+    --bg:#F7F2EA; --bg2:#FBF8F2; --card:#FFFFFF;
+    --ink:#3B352D; --ink-soft:#6E665A; --muted:#A79C8B; --line:#E9E0D2;
+    --gold:#C2A268; --gold-deep:#A9854B; --gold-soft:#F3EAD8; --rose:#C58E86;
     --shadow:0 14px 40px -18px rgba(80,60,30,.32);
     --shadow-sm:0 6px 18px -10px rgba(80,60,30,.30);
-    --radius:20px;
-    --ease:cubic-bezier(.22,.61,.36,1);
+    --radius:20px; --ease:cubic-bezier(.22,.61,.36,1);
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0}
   body{
     font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
     color:var(--ink);
-    background:
-      radial-gradient(1200px 600px at 50% -10%, #FFFDF8 0%, rgba(255,253,248,0) 60%),
-      linear-gradient(180deg,var(--bg2),var(--bg));
-    background-attachment:fixed;
-    min-height:100vh;
-    line-height:1.7;
-    -webkit-font-smoothing:antialiased;
+    background:radial-gradient(1200px 600px at 50% -10%, #FFFDF8 0%, rgba(255,253,248,0) 60%),linear-gradient(180deg,var(--bg2),var(--bg));
+    background-attachment:fixed;min-height:100vh;line-height:1.7;-webkit-font-smoothing:antialiased;
   }
   .mincho{font-family:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",serif;}
-
   .shell{max-width:560px;margin:0 auto;padding:0 18px;min-height:100vh;display:flex;flex-direction:column;}
 
   /* Top bar */
-  .topbar{position:sticky;top:0;z-index:30;padding:14px 2px 12px;
-    background:linear-gradient(180deg, var(--bg2) 70%, rgba(251,248,242,0));}
-  .brandrow{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .topbar{position:sticky;top:0;z-index:30;padding:14px 2px 12px;background:linear-gradient(180deg, var(--bg2) 70%, rgba(251,248,242,0));}
+  .brandrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .brand{font-family:"Shippori Mincho B1",serif;letter-spacing:.14em;font-size:15px;color:var(--ink);display:flex;align-items:center;gap:9px}
   .brand .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}
   .brand small{letter-spacing:.06em;color:var(--muted);font-family:"Zen Kaku Gothic New",sans-serif;font-size:10.5px;font-weight:500}
-  .adjust{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--ink-soft);cursor:pointer;user-select:none;
-    border:1px solid var(--line);background:#fff;padding:6px 10px;border-radius:999px;transition:.25s}
+  .tools{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+  .adjust{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-soft);cursor:pointer;user-select:none;
+    border:1px solid var(--line);background:#fff;padding:6px 10px;border-radius:999px;transition:.25s;white-space:nowrap}
   .adjust:hover{border-color:var(--gold)}
   .adjust .sw{width:30px;height:17px;border-radius:999px;background:#E4DBCB;position:relative;transition:.25s}
   .adjust .sw::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.25s var(--ease)}
@@ -59,8 +44,7 @@
   .swatch{width:13px;height:13px;border-radius:50%;background:var(--gold);box-shadow:inset 0 0 0 1.5px #fff,0 0 0 1px var(--line);transition:.3s}
 
   /* repeat / my-chart */
-  .lastvisit{background:linear-gradient(180deg,#fff,var(--gold-soft));border:1px solid var(--line);border-radius:15px;
-    padding:13px 15px;margin-bottom:16px;display:flex;align-items:center;gap:12px;text-align:left;box-shadow:var(--shadow-sm)}
+  .lastvisit{background:linear-gradient(180deg,#fff,var(--gold-soft));border:1px solid var(--line);border-radius:15px;padding:13px 15px;margin-bottom:16px;display:flex;align-items:center;gap:12px;text-align:left;box-shadow:var(--shadow-sm)}
   .lastvisit .lv-ic{flex:none;width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center;color:var(--gold-deep);font-size:18px}
   .lastvisit .lv-t{flex:1;font-size:12.5px;color:var(--ink-soft);line-height:1.5}
   .lastvisit .lv-t b{color:var(--ink);font-family:"Shippori Mincho B1",serif;font-weight:600}
@@ -76,14 +60,11 @@
 
   .progress-wrap{margin-top:11px;display:flex;align-items:center;gap:11px}
   .progress{flex:1;height:5px;border-radius:99px;background:#EBE2D2;overflow:hidden}
-  .progress > i{display:block;height:100%;width:0;border-radius:99px;
-    background:linear-gradient(90deg,var(--gold),var(--gold-deep));transition:width .55s var(--ease)}
+  .progress > i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--gold-deep));transition:width .55s var(--ease)}
   .stepno{font-size:11px;color:var(--muted);letter-spacing:.05em;font-variant-numeric:tabular-nums;white-space:nowrap}
 
-  /* Stage */
   main{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:8px 0 130px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
-    padding:26px 22px 24px;position:relative;overflow:hidden}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 22px 24px;position:relative;overflow:hidden}
   .card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5}
 
   .kicker{font-size:11.5px;letter-spacing:.18em;color:var(--gold-deep);font-weight:700;text-transform:uppercase;margin-bottom:9px}
@@ -94,13 +75,10 @@
 
   .opts{display:flex;flex-direction:column;gap:9px;margin-top:14px}
   .opts.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-  .opt{appearance:none;text-align:left;border:1.5px solid var(--line);background:#FFFEFB;border-radius:14px;
-    padding:13px 14px;cursor:pointer;transition:.2s var(--ease);display:flex;align-items:flex-start;gap:11px;
-    font-family:inherit;color:var(--ink);font-size:14.5px;line-height:1.45;width:100%}
+  .opt{appearance:none;text-align:left;border:1.5px solid var(--line);background:#FFFEFB;border-radius:14px;padding:13px 14px;cursor:pointer;transition:.2s var(--ease);display:flex;align-items:flex-start;gap:11px;font-family:inherit;color:var(--ink);font-size:14.5px;line-height:1.45;width:100%}
   .opt:hover{border-color:var(--gold);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
   .opt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-  .opt .mark{flex:none;width:21px;height:21px;border-radius:50%;border:1.5px solid var(--line);
-    display:grid;place-items:center;margin-top:1px;transition:.2s}
+  .opt .mark{flex:none;width:21px;height:21px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;margin-top:1px;transition:.2s}
   .opt.multi .mark{border-radius:7px}
   .opt .mark svg{width:12px;height:12px;opacity:0;transform:scale(.4);transition:.2s var(--ease)}
   .opt .body{display:flex;flex-direction:column}
@@ -108,30 +86,22 @@
   .opt.sel{border-color:var(--gold);background:linear-gradient(180deg,#FFFDF6,var(--gold-soft));box-shadow:var(--shadow-sm)}
   .opt.sel .mark{background:var(--gold);border-color:var(--gold)}
   .opt.sel .mark svg{opacity:1;transform:scale(1);color:#fff}
-  .opt .rankbadge{flex:none;width:21px;height:21px;border-radius:50%;border:1.5px solid var(--line);
-    display:grid;place-items:center;margin-top:1px;font-size:12px;font-weight:700;color:var(--muted);transition:.2s}
+  .opt .rankbadge{flex:none;width:21px;height:21px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;margin-top:1px;font-size:12px;font-weight:700;color:var(--muted);transition:.2s}
   .opt.sel .rankbadge{background:var(--gold);border-color:var(--gold);color:#fff}
   .opt.disabled{opacity:.4;pointer-events:none}
+  .counter{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--gold-deep);background:var(--gold-soft);border-radius:99px;padding:4px 11px;margin-top:14px;font-weight:700;font-variant-numeric:tabular-nums}
 
-  .counter{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--gold-deep);
-    background:var(--gold-soft);border-radius:99px;padding:4px 11px;margin-top:14px;font-weight:700;font-variant-numeric:tabular-nums}
-
-  /* Bottom nav */
-  .nav{position:fixed;left:0;right:0;bottom:0;z-index:40;
-    background:linear-gradient(180deg,rgba(247,242,234,0),var(--bg) 38%);padding:16px 0 max(18px,env(safe-area-inset-bottom))}
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:linear-gradient(180deg,rgba(247,242,234,0),var(--bg) 38%);padding:16px 0 max(18px,env(safe-area-inset-bottom))}
   .nav-inner{max-width:560px;margin:0 auto;padding:0 18px;display:flex;gap:12px}
-  .btn{flex:1;border:none;border-radius:15px;padding:15px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;
-    transition:.2s var(--ease);letter-spacing:.04em}
+  .btn{flex:1;border:none;border-radius:15px;padding:15px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:.2s var(--ease);letter-spacing:.04em}
   .btn-ghost{flex:0 0 116px;background:#fff;border:1.5px solid var(--line);color:var(--ink-soft)}
   .btn-ghost:hover{border-color:var(--gold);color:var(--ink)}
   .btn-primary{background:linear-gradient(180deg,#4A4339,#3B352D);color:#F6EFE1;box-shadow:0 10px 24px -12px rgba(59,53,45,.8)}
   .btn-primary:hover{transform:translateY(-1px)}
   .btn-primary:disabled{background:#E7DECF;color:#B7AC99;cursor:not-allowed;transform:none;box-shadow:none}
 
-  /* Hero */
   .hero{text-align:center;padding:46px 22px 40px}
-  .hero .glyph{width:62px;height:62px;margin:0 auto 22px;display:grid;place-items:center;border-radius:50%;
-    background:linear-gradient(180deg,#fff,var(--gold-soft));border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+  .hero .glyph{width:62px;height:62px;margin:0 auto 22px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(180deg,#fff,var(--gold-soft));border:1px solid var(--line);box-shadow:var(--shadow-sm)}
   .hero .glyph svg{width:34px;height:34px;color:var(--gold-deep)}
   .hero h1{font-family:"Shippori Mincho B1",serif;font-weight:600;font-size:27px;line-height:1.6;margin:0 0 6px;letter-spacing:.02em}
   .hero .cn{font-family:"Shippori Mincho B1",serif;color:var(--gold-deep);letter-spacing:.3em;font-size:13px;margin-bottom:20px}
@@ -139,12 +109,10 @@
   .hero .steps-mini{display:flex;justify-content:center;gap:7px;margin:26px 0 6px;flex-wrap:wrap}
   .hero .steps-mini span{font-size:11px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 12px}
 
-  /* transitions */
   .enter{animation:enter .5s var(--ease) both}
   @keyframes enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
   .reveal{opacity:0;transform:translateY(16px);animation:enter .6s var(--ease) forwards}
 
-  /* Result */
   .res-head{text-align:center;padding:8px 6px 4px}
   .res-head .kicker{margin-bottom:8px}
   .res-head h2{font-family:"Shippori Mincho B1",serif;font-size:23px;font-weight:600;margin:0 0 6px;line-height:1.5}
@@ -153,35 +121,29 @@
   .block h3{font-family:"Shippori Mincho B1",serif;font-size:16px;font-weight:600;margin:0 0 4px;display:flex;align-items:center;gap:9px}
   .block h3 .n{flex:none;width:24px;height:24px;border-radius:8px;background:var(--gold-soft);color:var(--gold-deep);display:grid;place-items:center;font-size:12px;font-weight:800;font-family:"Zen Kaku Gothic New",sans-serif}
   .block .lead{font-size:12px;color:var(--muted);margin:0 0 12px}
-
   .summary{display:grid;grid-template-columns:auto 1fr;gap:9px 14px;font-size:13.5px}
   .summary dt{color:var(--muted);font-size:12px;white-space:nowrap}
   .summary dd{margin:0;color:var(--ink)}
-
   .emo-flow{display:flex;flex-direction:column;gap:8px}
   .emo-row{display:flex;align-items:center;gap:10px;font-size:13.5px}
   .emo-row .e{flex:1;color:var(--ink-soft)}
   .emo-row .arr{color:var(--gold);font-size:12px}
-  .organ-chip{display:inline-grid;place-items:center;min-width:34px;height:34px;border-radius:10px;padding:0 9px;
-    font-family:"Shippori Mincho B1",serif;font-size:16px;font-weight:600;color:#fff;
-    background:linear-gradient(180deg,var(--gold),var(--gold-deep));box-shadow:var(--shadow-sm)}
+  .organ-chip{display:inline-grid;place-items:center;min-width:34px;height:34px;border-radius:10px;padding:0 9px;font-family:"Shippori Mincho B1",serif;font-size:16px;font-weight:600;color:#fff;background:linear-gradient(180deg,var(--gold),var(--gold-deep));box-shadow:var(--shadow-sm)}
   .organ-summary{margin-top:14px;padding:13px 14px;border-radius:13px;background:var(--gold-soft);font-size:13.5px;line-height:1.7;color:var(--ink)}
   .organ-summary b{color:var(--gold-deep)}
-
   .ears{display:flex;gap:12px;margin-top:6px}
   .ear-col{flex:1;text-align:center}
   .ear-col .ear-name{font-family:"Shippori Mincho B1",serif;font-size:14px;margin-bottom:2px}
   .ear-col .ear-sub{font-size:10.5px;color:var(--muted);margin-bottom:6px;min-height:14px}
-  .ear-svg{width:100%;height:auto;display:block}
+  .ear-svg{width:100%;height:auto;display:block;border-radius:12px}
+  .ear-svg.editable{outline:2px dashed var(--gold);outline-offset:2px;touch-action:none;cursor:grab}
+  .adjust-hint{font-size:11.5px;color:var(--gold-deep);background:var(--gold-soft);border-radius:10px;padding:8px 11px;margin:0 0 10px;line-height:1.5}
   .badge-pop{transform-origin:center;animation:pop .45s var(--ease) both}
   @keyframes pop{0%{opacity:0;transform:scale(.2)}70%{transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
-
   .legend{margin-top:14px;display:flex;flex-direction:column;gap:7px}
   .legend .li{display:flex;align-items:flex-start;gap:10px;font-size:12.5px;color:var(--ink-soft)}
-  .legend .li .b{flex:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(180deg,var(--gold),var(--gold-deep));
-    color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;margin-top:1px}
+  .legend .li .b{flex:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(180deg,var(--gold),var(--gold-deep));color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;margin-top:1px}
   .legend .li b{color:var(--ink);font-weight:600}
-
   .howto li{font-size:13px;color:var(--ink-soft);margin-bottom:9px;line-height:1.65}
   .howto li b{color:var(--ink)}
   .next-list{display:flex;flex-direction:column;gap:8px;margin-top:4px}
@@ -193,9 +155,53 @@
   .restart{background:none;border:1px solid var(--line);color:var(--ink-soft);border-radius:99px;padding:11px 22px;font-family:inherit;font-size:13px;cursor:pointer;transition:.2s}
   .restart:hover{border-color:var(--gold);color:var(--ink)}
 
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:.001ms !important;transition-duration:.05ms !important}
-  }
+  /* ===== Admin ===== */
+  .admin-overlay{position:fixed;inset:0;z-index:100;background:rgba(40,34,28,.46);backdrop-filter:blur(3px);display:none;padding:0}
+  .admin-overlay.open{display:block}
+  .admin-sheet{max-width:720px;margin:18px auto;height:calc(100vh - 36px);background:#fff;border-radius:20px;box-shadow:0 30px 80px -20px rgba(40,30,10,.5);display:flex;flex-direction:column;overflow:hidden}
+  .admin-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,var(--gold-soft))}
+  .admin-head h2{font-family:"Shippori Mincho B1",serif;font-size:17px;margin:0;color:var(--ink)}
+  .admin-head .sub{font-size:11px;color:var(--muted);margin-top:2px}
+  .x-btn{border:1px solid var(--line);background:#fff;border-radius:50%;width:34px;height:34px;font-size:17px;cursor:pointer;color:var(--ink-soft);line-height:1}
+  .x-btn:hover{border-color:var(--gold)}
+  .admin-tabs{display:flex;gap:6px;overflow-x:auto;padding:12px 18px 0;background:#FBF8F2}
+  .admin-tab{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px 999px 0 0;padding:9px 15px;font-family:inherit;font-size:12.5px;color:var(--ink-soft);cursor:pointer;font-weight:700;border-bottom:none}
+  .admin-tab.active{background:var(--gold);color:#fff;border-color:var(--gold)}
+  .admin-body{padding:18px;overflow:auto;flex:1;background:#FBF8F2}
+  .admin-foot{display:flex;gap:10px;padding:13px 18px;border-top:1px solid var(--line);background:#fff;flex-wrap:wrap}
+  .a-note{font-size:12px;color:var(--ink-soft);background:#FFF7E8;border:1px solid var(--gold-soft);border-radius:10px;padding:10px 12px;margin-bottom:14px;line-height:1.6}
+  .fld{margin-bottom:13px}
+  .fld>label{font-size:11.5px;color:var(--ink-soft);display:block;margin-bottom:5px;font-weight:700;letter-spacing:.02em}
+  .fld input[type=text],.fld textarea,.adm-in{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 11px;font-family:inherit;font-size:13.5px;color:var(--ink);background:#FFFEFB}
+  .fld textarea{min-height:60px;resize:vertical;line-height:1.55}
+  .fld input:focus,.fld textarea:focus,.adm-in:focus{outline:none;border-color:var(--gold)}
+  .qedit{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px;background:#fff;box-shadow:var(--shadow-sm)}
+  .qedit .qh{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .qedit .qh .tag{font-size:10.5px;font-weight:700;color:var(--gold-deep);background:var(--gold-soft);padding:3px 9px;border-radius:99px}
+  .opt-row{display:flex;gap:7px;margin-bottom:7px;align-items:center}
+  .opt-row .adm-in{flex:1}
+  .grp{border:1px dashed var(--line);border-radius:11px;padding:11px;margin-bottom:11px;background:#FCFAF5}
+  .mini-btn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 11px;font-size:12px;cursor:pointer;font-family:inherit;color:var(--ink-soft);white-space:nowrap}
+  .mini-btn:hover{border-color:var(--gold);color:var(--ink)}
+  .mini-btn.danger{color:#B5544A}
+  .mini-btn.danger:hover{border-color:#C97A6E;background:#FBEDEB}
+  .mini-btn.gold{background:var(--gold);color:#fff;border-color:var(--gold)}
+  .sec-title{font-family:"Shippori Mincho B1",serif;font-size:14px;color:var(--ink);margin:18px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .sec-title:first-child{margin-top:0}
+  .color-row{display:flex;gap:14px;flex-wrap:wrap}
+  .color-row .ci{display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--ink-soft)}
+  .color-row input[type=color]{width:52px;height:38px;border:1px solid var(--line);border-radius:9px;background:#fff;padding:2px;cursor:pointer}
+  .ear-editor{display:flex;gap:16px;flex-wrap:wrap}
+  .ear-edit-stage{flex:1;min-width:240px}
+  .ear-edit-svg{width:100%;border:1px solid var(--line);border-radius:14px;background:#FBF3E6;touch-action:none;display:block}
+  .ear-edit-svg .pt-badge{cursor:grab}
+  .ear-side{flex:1;min-width:200px}
+  .upload-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:10px}
+  .ta-mono{width:100%;min-height:150px;border:1.5px solid var(--line);border-radius:10px;padding:11px;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--ink);background:#FFFEFB;line-height:1.5}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(8px);background:var(--ink);color:#F6EFE1;padding:10px 18px;border-radius:999px;font-size:13px;z-index:200;opacity:0;transition:.3s var(--ease);pointer-events:none;box-shadow:var(--shadow)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;transition-duration:.05ms !important}}
   @media (max-width:380px){ .opts.grid{grid-template-columns:1fr} }
 </style>
 </head>
@@ -204,11 +210,10 @@
   <div class="topbar" id="topbar">
     <div class="brandrow">
       <div class="brand"><span class="dot"></span><span id="brandName" class="mincho">totonoué</span>&nbsp;<small id="brandTag">耳ツボセラピー</small></div>
-      <div style="display:flex;gap:8px;align-items:center">
+      <div class="tools">
         <div class="adjust" id="brandSwitch" tabindex="0" title="ホワイトラベル：院ごとにブランドを差し替え（デモ）"><span class="swatch" id="swatch"></span>店舗</div>
-        <div class="adjust" id="adjust" role="switch" aria-checked="false" tabindex="0" title="結果の耳マップ上の位置を微調整するモード（デモ）">
-          <span class="sw"></span>位置調整
-        </div>
+        <div class="adjust" id="adjust" role="switch" aria-checked="false" tabindex="0" title="結果の耳マップ上のポイント位置をドラッグで微調整"><span class="sw"></span>位置調整</div>
+        <div class="adjust" id="adminBtn" tabindex="0" title="管理画面（文言・設問・耳マップを編集）">⚙ 管理</div>
       </div>
     </div>
     <div class="progress-wrap" id="progressWrap" style="display:none">
@@ -216,7 +221,6 @@
       <div class="stepno" id="stepno">1 / 9</div>
     </div>
   </div>
-
   <main id="stage"></main>
 </div>
 
@@ -227,16 +231,19 @@
   </div>
 </div>
 
+<div class="admin-overlay" id="adminOverlay"></div>
+<div class="toast" id="toast"></div>
+
 <script>
-/* ---------- icons ---------- */
+/* ===================== icons ===================== */
 const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg>';
 const EARGLYPH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 1 1 12 0c0 3-2.2 4-3.4 5.2C13.4 15.4 13 16.4 13 18a3 3 0 0 1-5.6 1.5"/><path d="M9.2 9.2a2.8 2.8 0 0 1 5.4 1c0 1.8-1.8 2.4-2.6 3.4"/></svg>';
 
-/* ---------- option pools ---------- */
+/* ===================== default option pools ===================== */
 const BODY_PARTS = ["頭","首肩","腕","肘","手首","指の関節","背中","腰","股関節","お尻・骨盤まわり","太もも","ふくらはぎ","膝","足首","足底","足の指"];
 const TROUBLES  = ["むくみ","眼精疲労","だるさ・倦怠感","寝ても疲れがとれない","不安感","冷え","便秘","つい食べすぎてしまう","ホットフラッシュ","花粉症・アレルギー症状"];
 
-/* ---------- ear reflex points (normalized to a 0..200 x, 0..280 y RIGHT-ear viewBox) ---------- */
+/* ===================== ear reflex base points (RIGHT-ear viewBox 200x280) ===================== */
 const PT = {
   "神門":[120,74],"内分泌":[96,196],"皮質下":[104,188],"交感":[140,150],
   "腎":[120,112],"肝":[110,150],"脾":[92,164],"心":[103,150],"肺":[90,150],
@@ -248,15 +255,9 @@ const PT = {
 
 /* complaint -> ordered reflex set */
 const COMPLAINT_PT = {
-  "むくみ":["腎","脾","内分泌"],
-  "眼精疲労":["眼","肝","枕"],
-  "だるさ・倦怠感":["脾","枕","腹水点"],
-  "寝ても疲れがとれない":["神門","心","腎"],
-  "不安感":["神門","心","皮質下"],
-  "冷え":["腎","内分泌","交感"],
-  "便秘":["大腸","直腸","脾"],
-  "つい食べすぎてしまう":["飢点","胃","脾"],
-  "ホットフラッシュ":["内分泌","腎","神門"],
+  "むくみ":["腎","脾","内分泌"],"眼精疲労":["眼","肝","枕"],"だるさ・倦怠感":["脾","枕","腹水点"],
+  "寝ても疲れがとれない":["神門","心","腎"],"不安感":["神門","心","皮質下"],"冷え":["腎","内分泌","交感"],
+  "便秘":["大腸","直腸","脾"],"つい食べすぎてしまう":["飢点","胃","脾"],"ホットフラッシュ":["内分泌","腎","神門"],
   "花粉症・アレルギー症状":["内鼻","肺","風渓"],
   "頭":["頭点","枕","神門"],"首肩":["頸肩","肩","神門"],"腕":["腕指","肩","神門"],
   "肘":["肘","腕指","神門"],"手首":["腕指","肘","神門"],"指の関節":["腕指","肝","神門"],
@@ -266,18 +267,13 @@ const COMPLAINT_PT = {
   "足底":["足趾","腎","神門"],"足の指":["足趾","足首","神門"]
 };
 const BALANCE_SET = ["神門","内分泌","皮質下"];
-
-/* emotion -> organ */
 const EMO_ORGAN = {
-  "最近イライラしやすいと感じる":"肝","しばらくストレス発散ができていない":"肝",
-  "自分の感情に蓋をしている感じがする":"肺","リラックスするのが苦手":"心",
-  "集中力が続かない":"脾","眠りが浅い":"心","あれこれ考えすぎてしまう":"脾",
-  "心配事が頭から離れない":"脾","悲しい":"肺","憂鬱な気分が続いている":"肺",
-  "落ち込む出来事があった":"肺","焦りやすい":"腎","怖さを感じる":"腎","記憶力が落ちたと感じる":"腎"
+  "最近イライラしやすいと感じる":"肝","しばらくストレス発散ができていない":"肝","自分の感情に蓋をしている感じがする":"肺",
+  "リラックスするのが苦手":"心","集中力が続かない":"脾","眠りが浅い":"心","あれこれ考えすぎてしまう":"脾",
+  "心配事が頭から離れない":"脾","悲しい":"肺","憂鬱な気分が続いている":"肺","落ち込む出来事があった":"肺",
+  "焦りやすい":"腎","怖さを感じる":"腎","記憶力が落ちたと感じる":"腎"
 };
 const ORGAN_PT = {"肺":"肺","腎":"腎","肝":"肝","心":"心","脾":"脾"};
-
-/* Q8 -> extra reflex */
 const BODYSTATE_PT = {
   "食いしばり・歯ぎしりがある／マウスピースをしている":"下顎",
   "首を動かすと痛む／ストレートネックと言われた":"頸肩",
@@ -285,8 +281,8 @@ const BODYSTATE_PT = {
   "四十肩・五十肩がある／座り仕事が多い／股関節が硬い":"骨盤"
 };
 
-/* ---------- questions ---------- */
-const Q = [
+/* ===================== default questions ===================== */
+const DEFAULT_Q = [
   { id:"particles", type:"single", kicker:"Step 0",
     title:"耳ツボシールは、何粒くらいから始めたいですか？",
     note:"貼る数で、ご提案の細かさが変わります。迷ったら「しっかり」でOK。毎回変更できます。",
@@ -298,24 +294,19 @@ const Q = [
   { id:"main", type:"single-grouped", kicker:"Step 1",
     title:"今、いちばん整えたい不調を1つ選んでください",
     note:"1つに絞ることで、効いているかどうかがご自身でも分かりやすくなります。",
-    groups:[
-      {name:"コリ・痛み系（部位）", values:BODY_PARTS},
-      {name:"不調・お悩み系", values:TROUBLES},
-    ]},
+    groups:[ {name:"コリ・痛み系（部位）", values:BODY_PARTS.slice()}, {name:"不調・お悩み系", values:TROUBLES.slice()} ]},
   { id:"side", type:"single", kicker:"Step 1.5", conditional:true,
     title:"その辛さは、左右どちらが強いですか？",
     note:"辛い側の耳には、その不調を解消するご提案を。反対の耳には、体全体のバランスを整えるご提案をします。",
     options:[{value:"right",label:"右が強い"},{value:"left",label:"左が強い"},{value:"both",label:"真ん中・両方同じくらい"}]},
   { id:"sub", type:"multi", kicker:"Step 2", optional:true, dynamic:"subOptions",
     title:"他に気になっている不調があれば教えてください",
-    note:"いちばんではないけれど、気になっていること。見立ての大事な手がかりになります。",
-    exclusive:["特になし"]},
+    note:"いちばんではないけれど、気になっていること。見立ての大事な手がかりになります。", exclusive:["特になし"]},
   { id:"period", type:"single", kicker:"Step 3",
     title:"その不調は、どれくらいの期間続いていますか？",
     options:["1ヶ月未満","1〜3ヶ月","3〜6ヶ月","6ヶ月〜1年","1年以上","若い頃からずっと"].map(v=>({value:v,label:v}))},
-  { id:"trigger", type:"multi", kicker:"Step 4", optional:true,
+  { id:"trigger", type:"multi", kicker:"Step 4", optional:true, exclusive:["特に思い当たらない"],
     title:"その不調に、何かきっかけがあったと感じますか？",
-    exclusive:["特に思い当たらない"],
     options:["特に思い当たらない","転倒・ぶつけた・捻挫などのケガ","引っ越しや仕事などの環境の変化","運動を急に始めた・またはやめた","同じ姿勢での長時間作業","ご家族の介護","精神的ストレスが増えた","体重の変化","お酒の量が増えた","食生活の乱れ","運動不足"].map(v=>({value:v,label:v}))},
   { id:"emotion", type:"rank", max:3, kicker:"Step 5",
     title:"今の心の状態に近いものを、当てはまる順に3つまで",
@@ -327,24 +318,80 @@ const Q = [
     options:["ねん挫","火傷","骨折","骨にひびが入った","突き指","腹腔鏡手術","開腹手術","切り傷","ムチウチ","広範囲の打撲","頭または顔面の強打","古傷はない"].map(v=>({value:v,label:v}))},
   { id:"bodystate", type:"multi", kicker:"Step 7", optional:true, exclusive:["どれにも該当しない"],
     title:"ご自身の体の状態について教えてください",
-    options:[
-      "食いしばり・歯ぎしりがある／マウスピースをしている",
-      "首を動かすと痛む／ストレートネックと言われた",
-      "月経周期が乱れがち／更年期症状を感じる",
-      "四十肩・五十肩がある／座り仕事が多い／股関節が硬い",
-      "どれにも該当しない"
-    ].map(v=>({value:v,label:v}))},
+    options:["食いしばり・歯ぎしりがある／マウスピースをしている","首を動かすと痛む／ストレートネックと言われた","月経周期が乱れがち／更年期症状を感じる","四十肩・五十肩がある／座り仕事が多い／股関節が硬い","どれにも該当しない"].map(v=>({value:v,label:v}))},
 ];
 
-/* ---------- white-label brand presets ---------- */
+/* ===================== white-label brand presets ===================== */
 const BRAND_PRESETS = [
-  {key:"totonoune", name:"totonoué", tag:"耳ツボセラピー", cn:"調 律",
-   catch:"今のあなたの体に聞く、<br/>オーダーメイドの貼り方", gold:"#C2A268", deep:"#A9854B", soft:"#F3EAD8"},
-  {key:"seishindo", name:"整心堂", tag:"耳つぼ整体", cn:"聴 体",
-   catch:"体の声を、耳でととのえる。", gold:"#6E9C8E", deep:"#4F7A6D", soft:"#E2EFEA"},
-  {key:"lien", name:"Lien", tag:"ear acu salon", cn:"結 ─ Lien",
-   catch:"今日のわたしに、<br/>効く一粒を。", gold:"#B98AA8", deep:"#8E5E7E", soft:"#F2E6EE"},
+  {key:"totonoune", name:"totonoué", tag:"耳ツボセラピー", cn:"調 律", catch:"今のあなたの体に聞く、<br/>オーダーメイドの貼り方", gold:"#C2A268", deep:"#A9854B", soft:"#F3EAD8"},
+  {key:"seishindo", name:"整心堂", tag:"耳つぼ整体", cn:"聴 体", catch:"体の声を、耳でととのえる。", gold:"#6E9C8E", deep:"#4F7A6D", soft:"#E2EFEA"},
+  {key:"lien", name:"Lien", tag:"ear acu salon", cn:"結 ─ Lien", catch:"今日のわたしに、<br/>効く一粒を。", gold:"#B98AA8", deep:"#8E5E7E", soft:"#F2E6EE"},
 ];
+
+/* ===================== default editable content (文言) ===================== */
+const DEFAULT_CONTENT = {
+  hero:{
+    intro:"東洋医学の考えをもとに、いくつかの質問から「耳のどこに耳ツボシールを貼るか」をあなただけに合わせてご提案します。",
+    steps:["所要 約2分","全8問","毎月見直し"],
+    start:"はじめる", startReturning:"今月の見直しをはじめる",
+    disclaimer:"※本アプリはセルフケアの提案ツールであり、医療行為ではありません。効果・安全性は未検証のデモです。"
+  },
+  result:{
+    kicker:"Your Prescription", title:"あなたへのご提案ができました", sub:"今日の体と心に合わせた、片耳{cap}粒の貼り方です。",
+    aHead:"あなたのご回答",
+    bHead:"今の心の状態の見える化", bLead:"選んでいただいた感情を、東洋医学の五臓につなげています。",
+    cHead:"耳の反射区マップ", cLead:"おすすめの貼付ポイントを番号で示しています。",
+    dHead:"貼り方のご案内",
+    howto:[
+      "写真・図の位置は<b>あくまで目安</b>です。マーク付近を指先でつまんで潰すように強く押し、<b>いちばん痛み・響きを感じるところ</b>に貼ってください。",
+      "図とズレても問題ありません。<b>むしろそこが、本当に貼るべき場所</b>です。",
+      "点線で示した候補は「押し比べ」用。押し比べて、いちばん響いたところに<b>1粒だけ</b>。左右で違う場所になっても大丈夫です。"
+    ],
+    eHead:"来月のご提案", eLead:"今回の{cap}粒に入りきらなかった候補です。来月、組み直してご提案します。",
+    fHead:"マイカルテ・来月の見直し", fLead:"このご提案を記録すると、来月「前回からの変化」を見ながら組み直せます。",
+    reminderTitle:"来月の見直しリマインド", reminderSub:"1ヶ月後にLINE／メールでお知らせ（デモ）", saveBtn:"このカルテを保存する",
+    gHead:"さいごに", closing:"今回の貼り方で体がどう変わったか、来月のカウンセリングで聞かせてください。<br/>その手応えが、次のご提案をもっとあなたに合うものにします。",
+    disclaimer:"※本アプリはセルフケアの提案ツールであり、医療行為ではありません。効果・安全性は未検証のデモです。耳の図と反射区の位置はイメージで、実際は「押し比べ」で決めてください。"
+  }
+};
+
+/* ===================== CONFIG (editable, localStorage-backed) ===================== */
+const CFG_KEY = "totonoune_cfg_v1";
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
+function deepMerge(base, over){
+  if(Array.isArray(base)) return (over!=null? over : base);
+  if(base && typeof base==="object"){
+    const out=Array.isArray(base)?[]:{...base};
+    for(const k in base) out[k]=deepMerge(base[k], over? over[k] : undefined);
+    if(over) for(const k in over) if(!(k in base)) out[k]=over[k];
+    return out;
+  }
+  return (over!==undefined? over : base);
+}
+let CONFIG = {};
+function loadConfig(){
+  let s={}; try{ s=JSON.parse(localStorage.getItem(CFG_KEY)||"{}"); }catch(e){}
+  CONFIG = {
+    content: deepMerge(clone(DEFAULT_CONTENT), s.content||{}),
+    questions: (Array.isArray(s.questions)&&s.questions.length)? s.questions : clone(DEFAULT_Q),
+    points: s.points||{},
+    earImages: Object.assign({right:null,left:null}, s.earImages||{}),
+    brands: s.brands||{}
+  };
+}
+function saveConfig(){
+  try{ localStorage.setItem(CFG_KEY, JSON.stringify(CONFIG)); }
+  catch(e){ toast("保存できませんでした（画像が大きすぎる可能性）"); }
+}
+function applyConfigToRuntime(){
+  Q = CONFIG.questions;
+  BRAND_PRESETS.forEach(b=>{ const o=CONFIG.brands[b.key]; if(o) Object.assign(b,o); });
+}
+function CT(){ return CONFIG.content; }
+function tpl(s,d){ return String(s==null?"":s).replace(/\{cap\}/g, (d&&d.cap)!=null? d.cap : ""); }
+function CFGpt(name){ return (CONFIG.points&&CONFIG.points[name]) || PT[name] || [100,150]; }
+
+/* ===================== brand ===================== */
 let brandIdx = 0;
 function brand(){ return BRAND_PRESETS[brandIdx]; }
 function applyBrand(){
@@ -356,17 +403,18 @@ function applyBrand(){
   if(view!=="q") render();
 }
 
-/* ---------- repeat engine (localStorage カルテ) ---------- */
+/* ===================== repeat engine (localStorage カルテ) ===================== */
 function histKey(){ return "totonoune_hist_"+brand().key; }
 function loadHistory(){ try{ return JSON.parse(localStorage.getItem(histKey())||"[]"); }catch(e){ return []; } }
 function saveRecord(rec){ const h=loadHistory(); h.push(rec); try{ localStorage.setItem(histKey(),JSON.stringify(h.slice(-12))); }catch(e){} }
 function lastRecord(){ const h=loadHistory(); return h.length? h[h.length-1] : null; }
 function fmtDate(ts){ const d=new Date(ts); return (d.getMonth()+1)+"月"+d.getDate()+"日"; }
 
-/* ---------- state ---------- */
-let view = "hero";   // hero | q | result
+/* ===================== state ===================== */
+let Q = DEFAULT_Q;
+let view = "hero";
 let qIndex = 0;
-const state = {};    // answers keyed by question id
+const state = {};
 let adjustMode = false;
 
 const stage = document.getElementById('stage');
@@ -377,22 +425,17 @@ const progressWrap = document.getElementById('progressWrap');
 const bar = document.getElementById('bar');
 const stepno = document.getElementById('stepno');
 
-/* which questions are active (handles conditional Q2) */
-function activeQuestions(){
-  return Q.filter(q=>{
-    if(q.id==="side") return BODY_PARTS.includes(state.main);
-    return true;
-  });
-}
-function isBodyMain(){ return BODY_PARTS.includes(state.main); }
-
-/* dynamic options for "他に気になる不調" (exclude already chosen main) */
+function mainQ(){ return Q.find(q=>q.id==="main"); }
+function bodyParts(){ const m=mainQ(); return (m&&m.groups&&m.groups[0]&&m.groups[0].values)||BODY_PARTS; }
+function troubles(){ const m=mainQ(); return (m&&m.groups&&m.groups[1]&&m.groups[1].values)||TROUBLES; }
+function activeQuestions(){ return Q.filter(q=> q.id==="side"? bodyParts().includes(state.main) : true); }
+function isBodyMain(){ return bodyParts().includes(state.main); }
 function subOptions(){
-  const all=[...BODY_PARTS,...TROUBLES].filter(v=>v!==state.main);
+  const all=[...bodyParts(),...troubles()].filter(v=>v!==state.main);
   return [{value:"特になし",label:"特になし"},...all.map(v=>({value:v,label:v}))];
 }
 
-/* ---------- render ---------- */
+/* ===================== render ===================== */
 function render(){
   if(view==="hero") return renderHero();
   if(view==="result") return renderResult();
@@ -400,27 +443,21 @@ function render(){
 }
 
 function renderHero(){
-  progressWrap.style.display="none";
-  nav.style.display="none";
-  const b=brand();
-  const last=lastRecord();
+  progressWrap.style.display="none"; nav.style.display="none";
+  const b=brand(), h=CT().hero, last=lastRecord();
   const lastCard = last ? `
-    <div class="lastvisit">
-      <div class="lv-ic">🗂️</div>
-      <div class="lv-t">前回のカルテ：<b>${fmtDate(last.ts)}</b>／主訴「${last.main}」（片耳${last.cap}粒）。<br/>今月も体の変化に合わせて、見直しましょう。</div>
-    </div>` : "";
+    <div class="lastvisit"><div class="lv-ic">🗂️</div>
+      <div class="lv-t">前回のカルテ：<b>${fmtDate(last.ts)}</b>／主訴「${last.main}」（片耳${last.cap}粒）。<br/>今月も体の変化に合わせて、見直しましょう。</div></div>` : "";
   stage.innerHTML = `
     <div class="card hero enter">
       ${lastCard}
       <div class="glyph">${EARGLYPH}</div>
       <div class="cn mincho">${b.cn}</div>
       <h1 class="mincho">${b.catch}</h1>
-      <p>東洋医学の考えをもとに、いくつかの質問から「耳のどこに耳ツボシールを貼るか」をあなただけに合わせてご提案します。</p>
-      <div class="steps-mini">
-        <span>所要 約2分</span><span>全8問</span><span>毎月見直し</span>
-      </div>
-      <button class="btn btn-primary" id="startBtn" style="margin-top:22px;width:100%">${last?"今月の見直しをはじめる":"はじめる"}</button>
-      <p class="disclaimer" style="margin-top:18px">※本アプリはセルフケアの提案ツールであり、医療行為ではありません。効果・安全性は未検証のデモです。</p>
+      <p>${h.intro}</p>
+      <div class="steps-mini">${(h.steps||[]).map(s=>`<span>${s}</span>`).join("")}</div>
+      <button class="btn btn-primary" id="startBtn" style="margin-top:22px;width:100%">${last? h.startReturning : h.start}</button>
+      <p class="disclaimer" style="margin-top:18px">${h.disclaimer}</p>
     </div>`;
   document.getElementById('startBtn').onclick=()=>{ view="q"; qIndex=0; render(); };
 }
@@ -429,51 +466,38 @@ function renderQuestion(){
   const list = activeQuestions();
   if(qIndex>=list.length){ view="result"; return render(); }
   const q = list[qIndex];
-  progressWrap.style.display="flex";
-  nav.style.display="block";
-  // progress
+  progressWrap.style.display="flex"; nav.style.display="block";
   const pct = Math.round((qIndex)/(list.length)*100);
   bar.style.width = Math.max(6,pct)+"%";
   stepno.textContent = `${qIndex+1} / ${list.length}`;
 
   let body = "";
   if(q.type==="single"){
-    body = `<div class="opts">`+ q.options.map(o=>optHtml(o, state[q.id]===o.value, "single")).join("") +`</div>`;
-  }
-  else if(q.type==="single-grouped"){
-    body = q.groups.map(g=>`
+    body = `<div class="opts">`+ (q.options||[]).map(o=>optHtml(o, state[q.id]===o.value, "single")).join("") +`</div>`;
+  } else if(q.type==="single-grouped"){
+    body = (q.groups||[]).map(g=>`
       <div class="group-label">${g.name}</div>
-      <div class="opts grid">${g.values.map(v=>optHtml({value:v,label:v}, state[q.id]===v,"single")).join("")}</div>
-    `).join("");
-  }
-  else if(q.type==="multi"){
-    const opts = q.dynamic ? subOptions() : q.options;
+      <div class="opts grid">${(g.values||[]).map(v=>optHtml({value:v,label:v}, state[q.id]===v,"single")).join("")}</div>`).join("");
+  } else if(q.type==="multi"){
+    const opts = q.dynamic ? subOptions() : (q.options||[]);
     const sel = state[q.id]||[];
     body = `<div class="opts">`+ opts.map(o=>optHtml(o, sel.includes(o.value), "multi")).join("") +`</div>`;
-  }
-  else if(q.type==="rank"){
+  } else if(q.type==="rank"){
     const sel = state[q.id]||[];
-    body = `<div class="opts">`+ q.options.map(o=>{
+    body = `<div class="opts">`+ (q.options||[]).map(o=>{
       const rank = sel.indexOf(o.value);
       return optHtml(o, rank>=0, "rank", rank>=0?rank+1:null, sel.length>=q.max && rank<0);
-    }).join("") +`</div>
-    <div class="counter">選択 ${sel.length}/${q.max}</div>`;
+    }).join("") +`</div><div class="counter">選択 ${sel.length}/${q.max}</div>`;
   }
 
   stage.innerHTML = `
-    <div class="card enter" key="${q.id}">
+    <div class="card enter">
       <div class="kicker">${q.kicker||""}</div>
       <h2 class="q-title mincho">${q.title}</h2>
       ${q.note?`<div class="q-note">${q.note}</div>`:""}
       ${body}
     </div>`;
-
-  // wire option clicks
-  stage.querySelectorAll('.opt').forEach(el=>{
-    el.addEventListener('click',()=>onSelect(q, el.dataset.value));
-  });
-
-  // nav state
+  stage.querySelectorAll('.opt').forEach(el=> el.addEventListener('click',()=>onSelect(q, el.dataset.value)) );
   backBtn.style.visibility = (qIndex===0) ? "hidden":"visible";
   nextBtn.textContent = (qIndex===list.length-1) ? "結果をみる" : "つぎへ";
   nextBtn.disabled = !isAnswered(q);
@@ -481,38 +505,24 @@ function renderQuestion(){
 
 function optHtml(o, selected, kind, rankNum, disabled){
   const cls = ["opt", kind, selected?"sel":"", disabled?"disabled":""].join(" ");
-  let marker;
-  if(kind==="rank") marker = `<span class="rankbadge">${rankNum||""}</span>`;
-  else marker = `<span class="mark">${CHECK}</span>`;
+  const marker = (kind==="rank") ? `<span class="rankbadge">${rankNum||""}</span>` : `<span class="mark">${CHECK}</span>`;
   return `<button class="${cls}" data-value="${escAttr(o.value)}" ${selected?'aria-pressed="true"':''}>
-      ${marker}
-      <span class="body"><span>${o.label}</span>${o.sub?`<span class="sub">${o.sub}</span>`:""}</span>
-    </button>`;
+      ${marker}<span class="body"><span>${o.label}</span>${o.sub?`<span class="sub">${o.sub}</span>`:""}</span></button>`;
 }
 function escAttr(s){return String(s).replace(/"/g,'&quot;');}
 
 function onSelect(q, value){
   if(q.type==="single"||q.type==="single-grouped"){
     state[q.id]=value;
-    if(q.id==="main"){ /* changing main resets dependent answers */ delete state.side; delete state.sub; }
-  }
-  else if(q.type==="multi"){
-    const arr = new Set(state[q.id]||[]);
-    const excl = (q.exclusive||[]);
-    if(excl.includes(value)){
-      // exclusive toggles alone
-      if(arr.has(value)){ arr.delete(value); } else { arr.clear(); arr.add(value); }
-    } else {
-      excl.forEach(e=>arr.delete(e)); // picking a normal option clears any exclusive choice
-      arr.has(value)?arr.delete(value):arr.add(value);
-    }
+    if(q.id==="main"){ delete state.side; delete state.sub; }
+  } else if(q.type==="multi"){
+    const arr = new Set(state[q.id]||[]); const excl = (q.exclusive||[]);
+    if(excl.includes(value)){ arr.has(value)? arr.delete(value) : (arr.clear(), arr.add(value)); }
+    else { excl.forEach(e=>arr.delete(e)); arr.has(value)?arr.delete(value):arr.add(value); }
     state[q.id]=[...arr];
-  }
-  else if(q.type==="rank"){
-    const arr = [...(state[q.id]||[])];
-    const i = arr.indexOf(value);
-    if(i>=0) arr.splice(i,1);
-    else if(arr.length<q.max) arr.push(value);
+  } else if(q.type==="rank"){
+    const arr = [...(state[q.id]||[])]; const i = arr.indexOf(value);
+    if(i>=0) arr.splice(i,1); else if(arr.length<q.max) arr.push(value);
     state[q.id]=arr;
   }
   renderQuestion();
@@ -521,15 +531,12 @@ function onSelect(q, value){
 function isAnswered(q){
   const v = state[q.id];
   if(q.optional) return true;
-  if(q.type==="multi") return Array.isArray(v)&&v.length>0;
-  if(q.type==="rank")  return Array.isArray(v)&&v.length>0;
+  if(q.type==="multi"||q.type==="rank") return Array.isArray(v)&&v.length>0;
   return !!v;
 }
 
-/* ---------- nav handlers ---------- */
 nextBtn.onclick=()=>{
-  const list=activeQuestions();
-  const q=list[qIndex];
+  const list=activeQuestions(); const q=list[qIndex];
   if(!isAnswered(q)) return;
   if(qIndex>=list.length-1){ view="result"; window.scrollTo(0,0); return render(); }
   qIndex++; window.scrollTo(0,0); render();
@@ -539,266 +546,444 @@ backBtn.onclick=()=>{
   if(qIndex>0){ qIndex--; window.scrollTo(0,0); render(); }
 };
 
-/* adjust toggle (demo) */
+/* adjust toggle (draggable points) */
 const adjustEl=document.getElementById('adjust');
 function toggleAdjust(){ adjustMode=!adjustMode; adjustEl.classList.toggle('on',adjustMode); adjustEl.setAttribute('aria-checked',adjustMode); if(view==="result") render(); }
 adjustEl.onclick=toggleAdjust;
 adjustEl.onkeydown=(e)=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleAdjust();} };
 
-/* brand switch (white-label demo) */
+/* brand switch */
 const brandSwitchEl=document.getElementById('brandSwitch');
-function cycleBrand(){ brandIdx=(brandIdx+1)%BRAND_PRESETS.length; if(view==="result"){ /* keep result */ } applyBrand(); }
+function cycleBrand(){ brandIdx=(brandIdx+1)%BRAND_PRESETS.length; applyBrand(); }
 brandSwitchEl.onclick=cycleBrand;
 brandSwitchEl.onkeydown=(e)=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();cycleBrand();} };
 
-/* ---------- result computation ---------- */
+/* ===================== result computation ===================== */
 function computeResult(){
   const cap = parseInt(state.particles||"3",10);
   const main = state.main;
   const primary = (COMPLAINT_PT[main]||["神門","内分泌","皮質下"]).slice();
-
-  // emotions -> organ tally (weighted by rank: 1st=3,2nd=2,3rd=1)
-  const emo = state.emotion||[];
-  const organScore={};
+  const emo = state.emotion||[]; const organScore={};
   emo.forEach((e,i)=>{ const o=EMO_ORGAN[e]; if(o){ organScore[o]=(organScore[o]||0)+(3-i); } });
   const topOrgans = Object.keys(organScore).sort((a,b)=>organScore[b]-organScore[a]).slice(0,2);
   const emoPoints = topOrgans.map(o=>ORGAN_PT[o]).filter(Boolean);
-
-  // body-state extras
   const bodyExtras = (state.bodystate||[]).map(v=>BODYSTATE_PT[v]).filter(Boolean);
-
-  // build per-ear candidate lists
-  const isBody = isBodyMain();
-  const side = state.side;
-  function buildEar(which){ // which: 'right'|'left'
+  const isBody = isBodyMain(); const side = state.side;
+  function buildEar(which){
     let list=[];
-    if(isBody && side && side!=="both"){
-      const affected = side; // 'right' or 'left'
-      if(which===affected){ list=primary.slice(); }
-      else { list=BALANCE_SET.slice(); }
-    } else {
-      list=primary.slice();
-    }
-    // append emotion reflex, then body extras (dedupe)
+    if(isBody && side && side!=="both"){ list = (which===side)? primary.slice() : BALANCE_SET.slice(); }
+    else { list = primary.slice(); }
     [...emoPoints,...bodyExtras].forEach(p=>{ if(!list.includes(p)) list.push(p); });
     return list;
   }
-  function splitCap(list){ return { placed:list.slice(0,cap), next:list.slice(cap) }; }
-
-  const right = splitCap(buildEar('right'));
-  const left  = splitCap(buildEar('left'));
-
-  return {cap,main,primary,topOrgans,organScore,emoPoints,right,left,isBody,side};
+  const splitCap = list => ({ placed:list.slice(0,cap), next:list.slice(cap) });
+  return {cap,main,primary,topOrgans,organScore,emoPoints,right:splitCap(buildEar('right')),left:splitCap(buildEar('left')),isBody,side};
 }
 
-/* ---------- ear SVG ---------- */
-function earSVG(side, placed){
-  // mirror for left ear: render outline group mirrored, badges with mirrored x but upright text
-  const mirror = (side==="left");
-  function X(x){ return mirror ? 200-x : x; }
-  const outline = `
-    <g ${mirror?'transform="translate(200,0) scale(-1,1)"':''}>
-      <path d="M150 60 C166 82 165 122 156 160 C150 196 134 226 110 246 C95 258 77 256 71 240 C65 224 70 205 70 196 C57 191 51 175 55 150 C59 119 71 95 96 76 C113 63 135 50 150 60 Z"
-        fill="#FBF3E6" stroke="#E4D3B4" stroke-width="2"/>
-      <path d="M138 74 C128 100 130 134 122 176" fill="none" stroke="#E9D9BC" stroke-width="7" stroke-linecap="round" opacity=".75"/>
-      <path d="M138 74 C146 86 150 96 150 104" fill="none" stroke="#E9D9BC" stroke-width="7" stroke-linecap="round" opacity=".75"/>
-      <ellipse cx="100" cy="150" rx="26" ry="33" fill="#F2E2C7" opacity=".7"/>
-      <ellipse cx="100" cy="150" rx="13" ry="17" fill="#EAD6B2" opacity=".7"/>
-      <path d="M70 150 C62 156 60 172 70 186" fill="#F4E6CC" stroke="#E4D3B4" stroke-width="1.5"/>
-    </g>`;
+/* ===================== ear SVG ===================== */
+const EAR_OUTLINE = `
+  <path d="M150 60 C166 82 165 122 156 160 C150 196 134 226 110 246 C95 258 77 256 71 240 C65 224 70 205 70 196 C57 191 51 175 55 150 C59 119 71 95 96 76 C113 63 135 50 150 60 Z" fill="#FBF3E6" stroke="#E4D3B4" stroke-width="2"/>
+  <path d="M138 74 C128 100 130 134 122 176" fill="none" stroke="#E9D9BC" stroke-width="7" stroke-linecap="round" opacity=".75"/>
+  <path d="M138 74 C146 86 150 96 150 104" fill="none" stroke="#E9D9BC" stroke-width="7" stroke-linecap="round" opacity=".75"/>
+  <ellipse cx="100" cy="150" rx="26" ry="33" fill="#F2E2C7" opacity=".7"/>
+  <ellipse cx="100" cy="150" rx="13" ry="17" fill="#EAD6B2" opacity=".7"/>
+  <path d="M70 150 C62 156 60 172 70 186" fill="#F4E6CC" stroke="#E4D3B4" stroke-width="1.5"/>`;
+function gradDef(id){ return `<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CBAC73"/><stop offset="1" stop-color="#A9854B"/></linearGradient></defs>`; }
+
+function earSVG(side, placed, editable){
+  const mirror=(side==="left"); const X=x=> mirror?200-x:x;
+  const bg=CONFIG.earImages&&CONFIG.earImages[side];
+  const back = bg
+    ? `<image href="${bg}" x="0" y="0" width="200" height="280" preserveAspectRatio="xMidYMid slice" ${mirror?'transform="translate(200,0) scale(-1,1)"':''}/>`
+    : `<g ${mirror?'transform="translate(200,0) scale(-1,1)"':''}>${EAR_OUTLINE}</g>`;
   const badges = placed.map((name,i)=>{
-    const c = PT[name]||[100,150];
-    const bx=X(c[0]), by=c[1];
-    return `<g class="badge-pop" style="animation-delay:${i*90}ms">
-        <line x1="${bx}" y1="${by}" x2="${bx}" y2="${by}" stroke="#C2A268" stroke-width="0"/>
-        <circle cx="${bx}" cy="${by}" r="13" fill="url(#g${side})" stroke="#fff" stroke-width="2"/>
-        <text x="${bx}" y="${by+4.5}" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="Zen Kaku Gothic New,sans-serif">${i+1}</text>
-      </g>`;
+    const c=CFGpt(name); const x=X(c[0]), y=c[1];
+    return `<g class="ptg" data-name="${name}" data-side="${side}" transform="translate(${x},${y})">
+        <g class="badge-pop" style="animation-delay:${i*90}ms">
+          <circle cx="0" cy="0" r="13" fill="url(#g_${side})" stroke="#fff" stroke-width="2"/>
+          <text x="0" y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="Zen Kaku Gothic New,sans-serif">${i+1}</text>
+        </g></g>`;
   }).join("");
-  return `<svg class="ear-svg" viewBox="0 0 200 280" role="img" aria-label="${side==='right'?'右':'左'}耳の反射区マップ">
-      <defs><linearGradient id="g${side}" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#CBAC73"/><stop offset="1" stop-color="#A9854B"/></linearGradient></defs>
-      ${outline}${badges}
-    </svg>`;
+  return `<svg class="ear-svg${editable?' editable':''}" data-ear="${side}" viewBox="0 0 200 280" role="img" aria-label="${side==='right'?'右':'左'}耳の反射区マップ">
+      ${gradDef('g_'+side)}${back}${badges}</svg>`;
 }
 
-/* ---------- render result ---------- */
-function renderResult(){
-  progressWrap.style.display="flex";
-  bar.style.width="100%"; stepno.textContent="完了";
-  nav.style.display="block";
-  backBtn.style.visibility="visible";
-  nextBtn.style.display="none";
-  backBtn.style.flex="1";
-
-  const r=computeResult();
-  const sideLabel = {right:"右",left:"左",both:"両方"}[r.side]||"";
-
-  // previous record comparison (repeat engine)
-  const prev=lastRecord();
-  let prevCompare="";
-  if(prev){
-    const sameMain = prev.main===state.main;
-    prevCompare = `<div class="compare">前回（<b>${fmtDate(prev.ts)}</b>）の主訴は「${prev.main}」。`
-      + (sameMain
-          ? `今回も同じ「${state.main}」のお悩みですね。継続して反射区を整えていきましょう。`
-          : `今回は「${state.main}」に変化。体の状態に合わせてご提案を組み替えました。`)
-      + `</div>`;
+/* drag support for ear points */
+function enableEarDrag(svg){
+  let cur=null;
+  function toVB(evt){ const p=svg.createSVGPoint(); p.x=evt.clientX; p.y=evt.clientY; const m=svg.getScreenCTM(); if(!m) return null; const q=p.matrixTransform(m.inverse()); return [q.x,q.y]; }
+  svg.querySelectorAll('[data-name]').forEach(g=>{
+    g.addEventListener('pointerdown', e=>{ cur=g; try{g.setPointerCapture(e.pointerId);}catch(_){} e.preventDefault(); });
+  });
+  svg.addEventListener('pointermove', e=>{
+    if(!cur) return;
+    const vb=toVB(e); if(!vb) return;
+    let x=Math.max(8,Math.min(192,vb[0])), y=Math.max(8,Math.min(272,vb[1]));
+    cur.setAttribute('transform',`translate(${x},${y})`); cur._xy=[x,y];
+  });
+  function end(){
+    if(!cur) return;
+    const name=cur.getAttribute('data-name'), sideAttr=cur.getAttribute('data-side'), xy=cur._xy;
+    if(xy){ const sx = sideAttr==='left'? 200-xy[0] : xy[0]; CONFIG.points[name]=[Math.round(sx),Math.round(xy[1])]; saveConfig(); toast(`「${name}」の位置を保存しました`); }
+    cur=null;
   }
+  svg.addEventListener('pointerup', end);
+  svg.addEventListener('pointercancel', end);
+}
 
-  // summary values
+/* ===================== render result ===================== */
+function renderResult(){
+  progressWrap.style.display="flex"; bar.style.width="100%"; stepno.textContent="完了";
+  nav.style.display="block"; backBtn.style.visibility="visible"; nextBtn.style.display="none"; backBtn.style.flex="1";
+  const R=CT().result, r=computeResult();
+
+  const prev=lastRecord(); let prevCompare="";
+  if(prev){
+    const same = prev.main===state.main;
+    prevCompare = `<div class="compare">前回（<b>${fmtDate(prev.ts)}</b>）の主訴は「${prev.main}」。`
+      + (same? `今回も同じ「${state.main}」のお悩みですね。継続して反射区を整えていきましょう。` : `今回は「${state.main}」に変化。体の状態に合わせてご提案を組み替えました。`) + `</div>`;
+  }
   const sum = [
-    ["シールの粒数", `片耳 ${r.cap}粒`],
-    ["いちばん整えたい不調", state.main||"—"],
-    ["続いている期間", state.period||"—"],
-    ["きっかけ", (state.trigger&&state.trigger.length)?state.trigger.join("、"):"—"],
-    ["他に気になる不調", (state.sub&&state.sub.length)?state.sub.join("、"):"—"],
-    ["今の心の状態", (state.emotion&&state.emotion.length)?state.emotion.join(" / "):"—"],
-    ["古傷", (state.scar&&state.scar.length)?state.scar.join("、"):"—"],
+    ["シールの粒数", `片耳 ${r.cap}粒`],["いちばん整えたい不調", state.main||"—"],["続いている期間", state.period||"—"],
+    ["きっかけ", (state.trigger&&state.trigger.length)?state.trigger.join("、"):"—"],["他に気になる不調", (state.sub&&state.sub.length)?state.sub.join("、"):"—"],
+    ["今の心の状態", (state.emotion&&state.emotion.length)?state.emotion.join(" / "):"—"],["古傷", (state.scar&&state.scar.length)?state.scar.join("、"):"—"],
     ["体の状態", (state.bodystate&&state.bodystate.length)?state.bodystate.join("、"):"—"],
   ];
-
-  // emotion -> organ rows
-  const emoRows = (state.emotion||[]).map(e=>{
-    const o=EMO_ORGAN[e];
-    return `<div class="emo-row"><span class="e">「${e}」</span><span class="arr">▶</span><span class="organ-chip mincho">${o||"？"}</span></div>`;
-  }).join("");
+  const emoRows = (state.emotion||[]).map(e=>{ const o=EMO_ORGAN[e]; return `<div class="emo-row"><span class="e">「${e}」</span><span class="arr">▶</span><span class="organ-chip mincho">${o||"？"}</span></div>`; }).join("");
   const organText = r.topOrgans.length
     ? `今のあなたの心は、<b>${r.topOrgans.join("・")}</b> に負担がかかりやすい状態です。おすすめの反射区は <b>${r.topOrgans.join("・")}</b> の${r.topOrgans.length}つ。指先でつまんで押し比べ、いちばん刺激を強く感じるところが、体がいちばん労わってほしいところです。`
     : `心の状態の入力から、特定の偏りは強く出ませんでした。全体のバランスを整えるご提案を中心にしています。`;
-
-  // legend for right ear
-  function legendFor(placed){
-    return placed.map((name,i)=>`<div class="li"><span class="b">${i+1}</span><span><b>${name}</b> の反射区</span></div>`).join("");
-  }
-
-  // ear sub captions
-  let rSub="", lSub="";
-  if(r.isBody && r.side && r.side!=="both"){
-    rSub = (r.side==="right") ? "辛い側｜不調を解消" : "反対側｜全体バランス";
-    lSub = (r.side==="left")  ? "辛い側｜不調を解消" : "反対側｜全体バランス";
-  } else {
-    rSub = lSub = "両耳に共通の貼り方";
-  }
-
-  // next month
-  const nextItems=[];
-  r.right.next.forEach(n=>nextItems.push(["右耳",n]));
-  r.left.next.forEach(n=>nextItems.push(["左耳",n]));
+  const legendFor = placed => placed.map((name,i)=>`<div class="li"><span class="b">${i+1}</span><span><b>${name}</b> の反射区</span></div>`).join("");
+  let rSub,lSub;
+  if(r.isBody && r.side && r.side!=="both"){ rSub=(r.side==="right")?"辛い側｜不調を解消":"反対側｜全体バランス"; lSub=(r.side==="left")?"辛い側｜不調を解消":"反対側｜全体バランス"; }
+  else { rSub=lSub="両耳に共通の貼り方"; }
+  const nextItems=[]; r.right.next.forEach(n=>nextItems.push(["右耳",n])); r.left.next.forEach(n=>nextItems.push(["左耳",n]));
 
   stage.innerHTML = `
     <div class="res-head reveal" style="animation-delay:.02s">
-      <div class="kicker">Your Prescription</div>
-      <h2 class="mincho">あなたへのご提案ができました</h2>
-      <p>今日の体と心に合わせた、片耳${r.cap}粒の貼り方です。</p>
+      <div class="kicker">${R.kicker}</div>
+      <h2 class="mincho">${R.title}</h2>
+      <p>${tpl(R.sub,{cap:r.cap})}</p>
     </div>
-
     <div class="block reveal" style="animation-delay:.08s">
-      <h3><span class="n">A</span>あなたのご回答</h3>
+      <h3><span class="n">A</span>${R.aHead}</h3>
       <dl class="summary">${sum.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
     </div>
-
     <div class="block reveal" style="animation-delay:.14s">
-      <h3><span class="n">B</span>今の心の状態の見える化</h3>
-      <p class="lead">選んでいただいた感情を、東洋医学の五臓につなげています。</p>
+      <h3><span class="n">B</span>${R.bHead}</h3>
+      <p class="lead">${R.bLead}</p>
       <div class="emo-flow">${emoRows||'<div class="emo-row"><span class="e">（心の状態の入力なし）</span></div>'}</div>
       <div class="organ-summary">${organText}</div>
     </div>
-
     <div class="block reveal" style="animation-delay:.2s">
-      <h3><span class="n">C</span>耳の反射区マップ</h3>
-      <p class="lead">${adjustMode? "位置調整モード：制作・サロン側でテンプレ位置を微調整できます（デモ表示）。":"おすすめの貼付ポイントを番号で示しています。"}</p>
+      <h3><span class="n">C</span>${R.cHead}</h3>
+      ${adjustMode?'<div class="adjust-hint">位置調整モード：耳の番号バッジを<b>ドラッグ</b>して貼付位置を微調整できます（自動保存）。管理画面では耳写真のアップロードと全ポイントの編集ができます。</div>':`<p class="lead">${R.cLead}</p>`}
       <div class="ears">
-        <div class="ear-col">
-          <div class="ear-name">右耳</div><div class="ear-sub">${rSub}</div>
-          ${earSVG("right", r.right.placed)}
-        </div>
-        <div class="ear-col">
-          <div class="ear-name">左耳</div><div class="ear-sub">${lSub}</div>
-          ${earSVG("left", r.left.placed)}
-        </div>
+        <div class="ear-col"><div class="ear-name">右耳</div><div class="ear-sub">${rSub}</div>${earSVG("right", r.right.placed, adjustMode)}</div>
+        <div class="ear-col"><div class="ear-name">左耳</div><div class="ear-sub">${lSub}</div>${earSVG("left", r.left.placed, adjustMode)}</div>
       </div>
-      <div class="legend">
-        <div style="font-size:11px;color:var(--muted);letter-spacing:.1em;margin-bottom:2px">右耳のポイント</div>
-        ${legendFor(r.right.placed)}
-      </div>
+      <div class="legend"><div style="font-size:11px;color:var(--muted);letter-spacing:.1em;margin-bottom:2px">右耳のポイント</div>${legendFor(r.right.placed)}</div>
     </div>
-
     <div class="block reveal" style="animation-delay:.26s">
-      <h3><span class="n">D</span>貼り方のご案内</h3>
-      <ul class="howto" style="margin:6px 0 0;padding-left:18px">
-        <li>写真・図の位置は<b>あくまで目安</b>です。マーク付近を指先でつまんで潰すように強く押し、<b>いちばん痛み・響きを感じるところ</b>に貼ってください。</li>
-        <li>図とズレても問題ありません。<b>むしろそこが、本当に貼るべき場所</b>です。</li>
-        <li>点線で示した候補は「押し比べ」用。押し比べて、いちばん響いたところに<b>1粒だけ</b>。左右で違う場所になっても大丈夫です。</li>
-      </ul>
+      <h3><span class="n">D</span>${R.dHead}</h3>
+      <ul class="howto" style="margin:6px 0 0;padding-left:18px">${(R.howto||[]).map(h=>`<li>${h}</li>`).join("")}</ul>
     </div>
-
     ${nextItems.length?`
     <div class="block reveal" style="animation-delay:.32s">
-      <h3><span class="n">E</span>来月のご提案</h3>
-      <p class="lead">今回の${r.cap}粒に入りきらなかった候補です。来月、組み直してご提案します。</p>
-      <div class="next-list">
-        ${nextItems.map(([ear,n])=>`<div class="next-item"><span class="ic">${ear}</span>${n} の反射区</div>`).join("")}
-      </div>
+      <h3><span class="n">E</span>${R.eHead}</h3>
+      <p class="lead">${tpl(R.eLead,{cap:r.cap})}</p>
+      <div class="next-list">${nextItems.map(([ear,n])=>`<div class="next-item"><span class="ic">${ear}</span>${n} の反射区</div>`).join("")}</div>
     </div>`:""}
-
     <div class="block reveal" style="animation-delay:.38s">
-      <h3><span class="n">F</span>マイカルテ・来月の見直し</h3>
-      <p class="lead">このご提案を記録すると、来月「前回からの変化」を見ながら組み直せます。</p>
+      <h3><span class="n">F</span>${R.fHead}</h3>
+      <p class="lead">${R.fLead}</p>
       ${prevCompare}
-      <div class="reminder">
-        <div class="rm-t">来月の見直しリマインド<small>1ヶ月後にLINE／メールでお知らせ（デモ）</small></div>
-        <div class="adjust" id="remToggle" role="switch" aria-checked="false" tabindex="0"><span class="sw"></span>受け取る</div>
-      </div>
-      <div class="save-row">
-        <button class="save-btn" id="saveChart">このカルテを保存する</button>
-      </div>
+      <div class="reminder"><div class="rm-t">${R.reminderTitle}<small>${R.reminderSub}</small></div>
+        <div class="adjust" id="remToggle" role="switch" aria-checked="false" tabindex="0"><span class="sw"></span>受け取る</div></div>
+      <div class="save-row"><button class="save-btn" id="saveChart">${R.saveBtn}</button></div>
     </div>
-
     <div class="block reveal" style="animation-delay:.44s">
-      <h3><span class="n">G</span>さいごに</h3>
-      <p class="closing">今回の貼り方で体がどう変わったか、来月のカウンセリングで聞かせてください。<br/>その手応えが、次のご提案をもっとあなたに合うものにします。</p>
+      <h3><span class="n">G</span>${R.gHead}</h3>
+      <p class="closing">${R.closing}</p>
     </div>
-
-    <p class="disclaimer">※本アプリはセルフケアの提案ツールであり、医療行為ではありません。効果・安全性は未検証のデモです。耳の図と反射区の位置はイメージで、実際は「押し比べ」で決めてください。</p>
-
-    <footer>
-      <button class="restart" id="restartBtn">はじめからやり直す</button>
-    </footer>`;
+    <p class="disclaimer">${R.disclaimer}</p>
+    <footer><button class="restart" id="restartBtn">はじめからやり直す</button></footer>`;
 
   backBtn.textContent="設問にもどる";
+  if(adjustMode){ stage.querySelectorAll('.ear-svg.editable').forEach(enableEarDrag); }
 
-  // reminder toggle (demo)
   const remBtn=document.getElementById('remToggle');
-  if(remBtn){
-    const tog=()=>{ const on=remBtn.classList.toggle('on'); remBtn.setAttribute('aria-checked',on); };
-    remBtn.onclick=tog;
-    remBtn.onkeydown=(e)=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();tog();} };
-  }
-  // save my-chart (repeat engine)
+  if(remBtn){ const tog=()=>{ const on=remBtn.classList.toggle('on'); remBtn.setAttribute('aria-checked',on); }; remBtn.onclick=tog; remBtn.onkeydown=(e)=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();tog();} }; }
   const saveBtn=document.getElementById('saveChart');
-  if(saveBtn){
-    saveBtn.onclick=()=>{
-      saveRecord({ ts:Date.now(), main:state.main, cap:r.cap, organs:r.topOrgans });
-      saveBtn.textContent="✓ カルテを保存しました";
-      saveBtn.classList.add('done');
-      saveBtn.disabled=true;
-    };
-  }
-
+  if(saveBtn){ saveBtn.onclick=()=>{ saveRecord({ts:Date.now(),main:state.main,cap:r.cap,organs:r.topOrgans}); saveBtn.textContent="✓ カルテを保存しました"; saveBtn.classList.add('done'); saveBtn.disabled=true; }; }
   document.getElementById('restartBtn').onclick=()=>{
     for(const k in state) delete state[k];
-    view="hero"; qIndex=0;
-    nextBtn.style.display=""; backBtn.style.flex="0 0 116px"; backBtn.textContent="もどる";
-    window.scrollTo(0,0); render();
+    view="hero"; qIndex=0; nextBtn.style.display=""; backBtn.style.flex="0 0 116px"; backBtn.textContent="もどる"; window.scrollTo(0,0); render();
   };
 }
 
-/* ---------- keyboard: Enter to advance ---------- */
+/* ===================== toast ===================== */
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1900); }
+
+/* ===================== ADMIN ===================== */
+const adminOverlay=document.getElementById('adminOverlay');
+let adminTab="content";
+function htmlEsc(s){ return String(s==null?"":s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function attrEsc(s){ return String(s==null?"":s).replace(/&/g,'&amp;').replace(/"/g,'&quot;'); }
+function getPath(obj,path){ return path.split('.').reduce((o,k)=> o==null?undefined:o[k], obj); }
+function setPath(obj,path,val){ const ks=path.split('.'); let o=obj; for(let i=0;i<ks.length-1;i++){ const k=ks[i]; if(o[k]==null) o[k]={}; o=o[k]; } o[ks[ks.length-1]]=val; }
+
+function openAdmin(){ adminOverlay.classList.add('open'); document.body.style.overflow="hidden"; renderAdmin(); }
+function closeAdmin(){ adminOverlay.classList.remove('open'); document.body.style.overflow=""; }
+
+const adminBtn=document.getElementById('adminBtn');
+adminBtn.onclick=openAdmin;
+adminBtn.onkeydown=(e)=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();openAdmin();} };
+
+const TABS=[["content","文言"],["questions","設問"],["ear","耳マップ"],["brand","ブランド"],["data","データ"]];
+
+function renderAdmin(){
+  adminOverlay.innerHTML = `
+    <div class="admin-sheet">
+      <div class="admin-head">
+        <div><h2>管理画面</h2><div class="sub">コードを触らず、文言・設問・耳マップを編集できます</div></div>
+        <button class="x-btn" id="admClose" title="閉じる">×</button>
+      </div>
+      <div class="admin-tabs">${TABS.map(([k,l])=>`<button class="admin-tab ${adminTab===k?'active':''}" data-tab="${k}">${l}</button>`).join("")}</div>
+      <div class="admin-body" id="admBody"></div>
+      <div class="admin-foot">
+        <button class="mini-btn gold" id="admApply">変更を反映してプレビュー</button>
+        <button class="mini-btn" id="admClose2">閉じる</button>
+        <span style="flex:1"></span>
+        <span style="font-size:11px;color:var(--muted);align-self:center">変更は自動保存（この端末）</span>
+      </div>
+    </div>`;
+  adminOverlay.querySelector('#admClose').onclick=closeAdmin;
+  adminOverlay.querySelector('#admClose2').onclick=closeAdmin;
+  adminOverlay.querySelector('#admApply').onclick=()=>{ applyConfigToRuntime(); applyBrand(); if(view!=="q") render(); else renderQuestion(); toast("プレビューに反映しました"); };
+  adminOverlay.querySelectorAll('.admin-tab').forEach(b=> b.onclick=()=>{ adminTab=b.dataset.tab; renderAdmin(); });
+  const body=adminOverlay.querySelector('#admBody');
+  if(adminTab==="content") renderContentTab(body);
+  else if(adminTab==="questions") renderQuestionsTab(body);
+  else if(adminTab==="ear") renderEarTab(body);
+  else if(adminTab==="brand") renderBrandTab(body);
+  else if(adminTab==="data") renderDataTab(body);
+}
+
+/* ---- content tab ---- */
+const CONTENT_FIELDS=[
+  ["最初の画面（ヒーロー）",[
+    ["content.hero.intro","紹介文","area"],
+    ["content.hero.steps.0","バッジ1","text"],["content.hero.steps.1","バッジ2","text"],["content.hero.steps.2","バッジ3","text"],
+    ["content.hero.start","開始ボタン","text"],["content.hero.startReturning","再訪時の開始ボタン","text"],
+    ["content.hero.disclaimer","注意書き","area"],
+  ]],
+  ["結果ヘッダー",[
+    ["content.result.kicker","小見出し（英）","text"],["content.result.title","見出し","text"],["content.result.sub","サブ（{cap}=粒数に置換）","text"],
+  ]],
+  ["A. ご回答 / B. 心の状態",[
+    ["content.result.aHead","A 見出し","text"],
+    ["content.result.bHead","B 見出し","text"],["content.result.bLead","B 説明","area"],
+  ]],
+  ["C. 耳マップ / D. 貼り方",[
+    ["content.result.cHead","C 見出し","text"],["content.result.cLead","C 説明","area"],
+    ["content.result.dHead","D 見出し","text"],
+    ["content.result.howto.0","貼り方1（<b>太字</b>可）","area"],["content.result.howto.1","貼り方2","area"],["content.result.howto.2","貼り方3","area"],
+  ]],
+  ["E. 来月 / F. マイカルテ",[
+    ["content.result.eHead","E 見出し","text"],["content.result.eLead","E 説明（{cap}可）","area"],
+    ["content.result.fHead","F 見出し","text"],["content.result.fLead","F 説明","area"],
+    ["content.result.reminderTitle","リマインド見出し","text"],["content.result.reminderSub","リマインド補足","text"],["content.result.saveBtn","保存ボタン","text"],
+  ]],
+  ["G. さいご / 注意書き",[
+    ["content.result.gHead","G 見出し","text"],["content.result.closing","締めの言葉（<br/>改行可）","area"],
+    ["content.result.disclaimer","結果の注意書き","area"],
+  ]],
+];
+function renderContentTab(body){
+  let html=`<div class="a-note">文言を書き換えると即保存され、「変更を反映してプレビュー」で画面に反映されます。<b>{cap}</b>は粒数、<b>&lt;b&gt;〜&lt;/b&gt;</b>で太字、<b>&lt;br/&gt;</b>で改行できます。</div>`;
+  CONTENT_FIELDS.forEach(([sec,items])=>{
+    html+=`<div class="sec-title">${sec}</div>`;
+    items.forEach(([path,label,kind])=>{
+      const v=getPath(CONFIG,path);
+      html+=`<div class="fld"><label>${label}</label>${ kind==="area"
+        ? `<textarea data-c="${path}">${htmlEsc(v)}</textarea>`
+        : `<input type="text" data-c="${path}" value="${attrEsc(v)}"/>` }</div>`;
+    });
+  });
+  body.innerHTML=html;
+  body.querySelectorAll('[data-c]').forEach(el=> el.addEventListener('input',()=>{ setPath(CONFIG, el.dataset.c, el.value); saveConfig(); }) );
+}
+
+/* ---- questions tab ---- */
+function renderQuestionsTab(body){
+  let html=`<div class="a-note">設問文・補足・選択肢を編集できます。<b>選択肢の名前は提案ロジック（不調×反射区）のキー</b>です。リネームすると一部の自動提案が外れることがあるため、名称変更は慎重に。</div>`;
+  Q.forEach((q,qi)=>{
+    html+=`<div class="qedit"><div class="qh"><span class="tag">${q.kicker||q.id}</span><span style="font-size:11px;color:var(--muted)">${q.type}</span></div>`;
+    html+=`<div class="fld"><label>小見出し（Step表記）</label><input class="adm-in" type="text" data-q="${qi}" data-f="kicker" value="${attrEsc(q.kicker||"")}"/></div>`;
+    html+=`<div class="fld"><label>質問文</label><input class="adm-in" type="text" data-q="${qi}" data-f="title" value="${attrEsc(q.title||"")}"/></div>`;
+    html+=`<div class="fld"><label>補足（空欄で非表示）</label><textarea data-q="${qi}" data-f="note">${htmlEsc(q.note||"")}</textarea></div>`;
+    if(q.type==="single-grouped"){
+      (q.groups||[]).forEach((g,gi)=>{
+        html+=`<div class="grp"><div class="fld"><label>グループ名</label><input class="adm-in" type="text" data-q="${qi}" data-g="${gi}" data-gf="name" value="${attrEsc(g.name)}"/></div>`;
+        (g.values||[]).forEach((val,vi)=>{
+          html+=`<div class="opt-row"><input class="adm-in" type="text" data-q="${qi}" data-g="${gi}" data-v="${vi}" value="${attrEsc(val)}"/><button class="mini-btn danger" data-act="delGval" data-q="${qi}" data-g="${gi}" data-v="${vi}">削除</button></div>`;
+        });
+        html+=`<button class="mini-btn" data-act="addGval" data-q="${qi}" data-g="${gi}">＋ 項目を追加</button></div>`;
+      });
+    } else if(q.dynamic){
+      html+=`<div class="a-note" style="margin:0">この設問の選択肢は「主訴」の項目から<b>自動生成</b>されます（個別編集は不要）。</div>`;
+    } else if(Array.isArray(q.options)){
+      const fixedVal = (q.id==="particles"||q.id==="side"); // 値はロジック用に固定
+      if(q.id==="emotion") html+=`<div class="a-note" style="margin:0 0 10px">※感情の選択肢は五臓マッピングのキーです。文言変更時はマッピング更新が必要になる場合があります。</div>`;
+      q.options.forEach((o,oi)=>{
+        html+=`<div class="opt-row"><input class="adm-in" type="text" data-q="${qi}" data-o="${oi}" data-of="label" value="${attrEsc(o.label)}"/>`;
+        if(q.id==="particles") html+=`<input class="adm-in" style="flex:.9" type="text" data-q="${qi}" data-o="${oi}" data-of="sub" value="${attrEsc(o.sub||"")}" placeholder="補足"/>`;
+        html+=`<button class="mini-btn danger" data-act="delOpt" data-q="${qi}" data-o="${oi}">削除</button></div>`;
+        if(fixedVal) html+=`<div style="font-size:10.5px;color:var(--muted);margin:-3px 0 7px 2px">内部値：${attrEsc(o.value)}（固定）</div>`;
+      });
+      html+=`<button class="mini-btn" data-act="addOpt" data-q="${qi}">＋ 選択肢を追加</button>`;
+    }
+    html+=`</div>`;
+  });
+  html+=`<button class="mini-btn danger" data-act="resetQ">設問をすべて初期状態に戻す</button>`;
+  body.innerHTML=html;
+
+  body.querySelectorAll('[data-f]').forEach(el=> el.addEventListener('input',()=>{ Q[+el.dataset.q][el.dataset.f]=el.value; saveConfig(); }) );
+  body.querySelectorAll('[data-gf]').forEach(el=> el.addEventListener('input',()=>{ Q[+el.dataset.q].groups[+el.dataset.g][el.dataset.gf]=el.value; saveConfig(); }) );
+  body.querySelectorAll('[data-v]').forEach(el=> el.addEventListener('input',()=>{ Q[+el.dataset.q].groups[+el.dataset.g].values[+el.dataset.v]=el.value; saveConfig(); }) );
+  body.querySelectorAll('[data-of]').forEach(el=> el.addEventListener('input',()=>{
+    const q=Q[+el.dataset.q], o=q.options[+el.dataset.o]; o[el.dataset.of]=el.value;
+    if(el.dataset.of==="label" && !(q.id==="particles"||q.id==="side")) o.value=el.value;
+    saveConfig();
+  }));
+  body.querySelectorAll('[data-act]').forEach(b=> b.onclick=()=>handleQAction(b.dataset));
+}
+function handleQAction(d){
+  const qi=+d.q;
+  if(d.act==="addOpt"){ const q=Q[qi]; q.options=q.options||[]; q.options.push({value:"新しい選択肢",label:"新しい選択肢"}); }
+  else if(d.act==="delOpt"){ Q[qi].options.splice(+d.o,1); }
+  else if(d.act==="addGval"){ Q[qi].groups[+d.g].values.push("新しい項目"); }
+  else if(d.act==="delGval"){ Q[qi].groups[+d.g].values.splice(+d.v,1); }
+  else if(d.act==="resetQ"){ CONFIG.questions=clone(DEFAULT_Q); Q=CONFIG.questions; }
+  saveConfig(); renderQuestionsTab(adminOverlay.querySelector('#admBody'));
+}
+
+/* ---- ear tab ---- */
+function renderEarTab(body){
+  body.innerHTML=`
+    <div class="a-note">耳の写真をアップロードし、各ポイントを<b>ドラッグ</b>して貼付位置を設定できます。位置は<b>右耳の座標</b>で編集し、左耳は自動で左右反転されます（自動保存）。</div>
+    <div class="ear-editor">
+      <div class="ear-edit-stage">
+        <div class="upload-row">
+          <label class="mini-btn">右耳画像を選ぶ<input type="file" accept="image/*" id="upR" hidden></label>
+          <label class="mini-btn">左耳画像を選ぶ<input type="file" accept="image/*" id="upL" hidden></label>
+        </div>
+        <div id="earEditHolder"></div>
+        <div style="display:flex;gap:8px;margin-top:9px;flex-wrap:wrap">
+          <button class="mini-btn danger" id="earClearImg">画像を消す</button>
+          <button class="mini-btn danger" id="earResetPts">位置を初期化</button>
+        </div>
+      </div>
+      <div class="ear-side">
+        <div class="sec-title" style="margin-top:0">プレビュー（結果画面の見え方）</div>
+        <div id="earPreview"></div>
+        <p style="font-size:11.5px;color:var(--ink-soft);line-height:1.6;margin-top:8px">左の編集マップでドラッグした位置が、結果画面の番号バッジに反映されます。番号は診断結果ごとに自動で決まります。</p>
+      </div>
+    </div>`;
+  drawEarEditor();
+  const previews = ()=>{ adminOverlay.querySelector('#earPreview').innerHTML =
+    `<div style="display:flex;gap:10px"><div style="flex:1">${earSVG('right',['神門','腎','脾'],false)}<div style="text-align:center;font-size:11px;color:var(--muted)">右耳</div></div>
+     <div style="flex:1">${earSVG('left',['神門','腎','脾'],false)}<div style="text-align:center;font-size:11px;color:var(--muted)">左耳</div></div></div>`; };
+  previews();
+
+  function readImg(file, cb){ const fr=new FileReader(); fr.onload=()=>cb(fr.result); fr.readAsDataURL(file); }
+  adminOverlay.querySelector('#upR').onchange=e=>{ const f=e.target.files[0]; if(f) readImg(f,d=>{ CONFIG.earImages.right=d; saveConfig(); drawEarEditor(); previews(); toast("右耳の画像を設定しました"); }); };
+  adminOverlay.querySelector('#upL').onchange=e=>{ const f=e.target.files[0]; if(f) readImg(f,d=>{ CONFIG.earImages.left=d; saveConfig(); previews(); toast("左耳の画像を設定しました"); }); };
+  adminOverlay.querySelector('#earClearImg').onclick=()=>{ CONFIG.earImages={right:null,left:null}; saveConfig(); drawEarEditor(); previews(); toast("画像を消しました"); };
+  adminOverlay.querySelector('#earResetPts').onclick=()=>{ CONFIG.points={}; saveConfig(); drawEarEditor(); previews(); toast("ポイント位置を初期化しました"); };
+}
+function drawEarEditor(){
+  const holder=adminOverlay.querySelector('#earEditHolder'); if(!holder) return;
+  const bg=CONFIG.earImages&&CONFIG.earImages.right;
+  const back = bg ? `<image href="${bg}" x="0" y="0" width="200" height="280" preserveAspectRatio="xMidYMid slice"/>` : `<g>${EAR_OUTLINE}</g>`;
+  const dots=Object.keys(PT).map(name=>{ const c=CFGpt(name); return `<g class="pt-badge" data-name="${name}" data-side="edit" transform="translate(${c[0]},${c[1]})">
+      <circle cx="0" cy="0" r="7.5" fill="url(#g_edit)" stroke="#fff" stroke-width="1.5"/>
+      <text x="0" y="-10" text-anchor="middle" font-size="8.5" font-weight="700" fill="#3B352D" stroke="#FBF3E6" stroke-width="2.4" paint-order="stroke" font-family="Zen Kaku Gothic New,sans-serif">${name}</text>
+    </g>`; }).join("");
+  holder.innerHTML=`<svg class="ear-edit-svg" viewBox="0 0 200 280">${gradDef('g_edit')}${back}${dots}</svg>`;
+  enableEarDrag(holder.querySelector('svg'));
+}
+
+/* ---- brand tab ---- */
+function renderBrandTab(body){
+  const b=brand();
+  body.innerHTML=`
+    <div class="a-note">いま選択中のブランド「<b>${attrEsc(b.name)}</b>」の見た目を編集します。右上「店舗」で別ブランドに切り替えてから編集すると、各院ごとに設定できます。</div>
+    <div class="fld"><label>院・サロン名</label><input class="adm-in" type="text" id="bName" value="${attrEsc(b.name)}"/></div>
+    <div class="fld"><label>サブタイトル</label><input class="adm-in" type="text" id="bTag" value="${attrEsc(b.tag)}"/></div>
+    <div class="fld"><label>装飾の漢字（ヒーロー上部）</label><input class="adm-in" type="text" id="bCn" value="${attrEsc(b.cn)}"/></div>
+    <div class="fld"><label>キャッチコピー（&lt;br/&gt;改行可）</label><textarea id="bCatch">${htmlEsc(b.catch)}</textarea></div>
+    <div class="sec-title">テーマカラー</div>
+    <div class="color-row">
+      <label class="ci">メイン<input type="color" id="cGold" value="${hex(b.gold)}"></label>
+      <label class="ci">濃いめ<input type="color" id="cDeep" value="${hex(b.deep)}"></label>
+      <label class="ci">淡い背景<input type="color" id="cSoft" value="${hex(b.soft)}"></label>
+    </div>`;
+  function setB(field,val){ b[field]=val; CONFIG.brands[b.key]=CONFIG.brands[b.key]||{}; CONFIG.brands[b.key][field]=val; saveConfig(); applyBrand(); }
+  adminOverlay.querySelector('#bName').addEventListener('input',e=>setB('name',e.target.value));
+  adminOverlay.querySelector('#bTag').addEventListener('input',e=>setB('tag',e.target.value));
+  adminOverlay.querySelector('#bCn').addEventListener('input',e=>setB('cn',e.target.value));
+  adminOverlay.querySelector('#bCatch').addEventListener('input',e=>setB('catch',e.target.value));
+  adminOverlay.querySelector('#cGold').addEventListener('input',e=>setB('gold',e.target.value));
+  adminOverlay.querySelector('#cDeep').addEventListener('input',e=>setB('deep',e.target.value));
+  adminOverlay.querySelector('#cSoft').addEventListener('input',e=>setB('soft',e.target.value));
+}
+function hex(c){ if(!c) return "#000000"; if(/^#([0-9a-f]{6})$/i.test(c)) return c; const m=/^#([0-9a-f]{3})$/i.exec(c); if(m){ return "#"+m[1].split('').map(x=>x+x).join(''); } return "#C2A268"; }
+
+/* ---- data tab ---- */
+function renderDataTab(body){
+  body.innerHTML=`
+    <div class="a-note">編集内容はこの端末のブラウザに保存されます。<b>公開サイト全員に反映するには、JSONを書き出して開発側に渡してください</b>（次回デプロイで全員に反映）。</div>
+    <div class="sec-title" style="margin-top:0">設定を書き出す（エクスポート）</div>
+    <textarea class="ta-mono" id="expArea" readonly>${htmlEsc(JSON.stringify(CONFIG,null,2))}</textarea>
+    <div style="display:flex;gap:9px;margin-top:9px;flex-wrap:wrap">
+      <button class="mini-btn gold" id="copyJson">コピー</button>
+      <button class="mini-btn" id="dlJson">ファイルで保存</button>
+    </div>
+    <div class="sec-title">設定を読み込む（インポート）</div>
+    <textarea class="ta-mono" id="impArea" placeholder="ここに設定JSONを貼り付け"></textarea>
+    <div style="display:flex;gap:9px;margin-top:9px;flex-wrap:wrap">
+      <button class="mini-btn gold" id="impBtn">読み込んで反映</button>
+      <button class="mini-btn danger" id="resetAll">すべて初期化</button>
+    </div>`;
+  adminOverlay.querySelector('#copyJson').onclick=()=>{ const t=adminOverlay.querySelector('#expArea'); t.select(); try{ navigator.clipboard.writeText(t.value); }catch(_){ document.execCommand('copy'); } toast("JSONをコピーしました"); };
+  adminOverlay.querySelector('#dlJson').onclick=()=>{ const blob=new Blob([JSON.stringify(CONFIG,null,2)],{type:"application/json"}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="totonoune_config.json"; a.click(); URL.revokeObjectURL(a.href); };
+  adminOverlay.querySelector('#impBtn').onclick=()=>{
+    const raw=adminOverlay.querySelector('#impArea').value.trim(); if(!raw) return;
+    let parsed; try{ parsed=JSON.parse(raw); }catch(e){ toast("JSONの形式が正しくありません"); return; }
+    CONFIG = {
+      content: deepMerge(clone(DEFAULT_CONTENT), parsed.content||{}),
+      questions: (Array.isArray(parsed.questions)&&parsed.questions.length)? parsed.questions : clone(DEFAULT_Q),
+      points: parsed.points||{}, earImages: Object.assign({right:null,left:null}, parsed.earImages||{}), brands: parsed.brands||{}
+    };
+    saveConfig(); applyConfigToRuntime(); applyBrand(); renderAdmin(); if(view!=="q") render(); toast("設定を読み込みました");
+  };
+  adminOverlay.querySelector('#resetAll').onclick=()=>{
+    try{ localStorage.removeItem(CFG_KEY); }catch(_){}
+    loadConfig(); applyConfigToRuntime(); applyBrand(); renderAdmin(); if(view!=="q") render(); toast("初期状態に戻しました");
+  };
+}
+
+/* ===================== keyboard ===================== */
 document.addEventListener('keydown',(e)=>{
-  if(e.key==="Enter" && view==="q" && !nextBtn.disabled){ nextBtn.click(); }
+  if(e.key==="Escape" && adminOverlay.classList.contains('open')) return closeAdmin();
+  if(e.key==="Enter" && view==="q" && !adminOverlay.classList.contains('open') && !nextBtn.disabled){ nextBtn.click(); }
 });
 
+/* ===================== init ===================== */
+loadConfig();
+applyConfigToRuntime();
 applyBrand();
 render();
 </script>
